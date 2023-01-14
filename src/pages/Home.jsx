@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Logo from "../components/Logo";
 import MainButton from "../components/MainButton";
 import Modal from "react-modal";
+import Login from "../components/Login";
 const Home = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -21,10 +22,12 @@ const Home = () => {
                 // left: 0,
                 // right: 0,
                 // bottom: 0,
-                margin: "auto",
+                marginLeft: "auto",
+                marginRight: "auto",
                 border: "1px solid #ccc",
                 width: "500px",
-                height: "300px",
+                marginTop: "200px",
+                // height: "300px",
                 borderRadius: "4px",
                 padding: "20px",
               },
@@ -35,6 +38,7 @@ const Home = () => {
             <MainButton onClick={() => setModalIsOpen(false)}>
               Modal Close
             </MainButton>
+            <Login />
           </Modal>
 
           <MainButton onClick={() => navigate("/SignUp")}>회원가입</MainButton>
@@ -73,7 +77,6 @@ const MainImage = styled.img`
 `;
 
 const MainWrap = styled.div`
-  max-width: 1920px;
   width: 90%;
   display: flex;
   flex-direction: column;
