@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import todos from "../modules/todosSlice";
+import memeberList from "../modules/memeberListSlice";
 
 const store = configureStore({
   reducer: {
-    // todos,
+    memeberList,
   },
 });
 

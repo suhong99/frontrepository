@@ -1,42 +1,55 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import MainButton from "./MainButton";
+import { __postLogin } from "../redux/modules/memeberListSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = (props) => {
-  const [inputs, setInputs] = useState({
+  const dispatch = useDispatch();
+
+  const [member, setMember] = useState({
     memberId: "",
     password: "",
   });
   const memberIdInput = useRef();
   const passwordInput = useRef();
-  const { memberId, password } = inputs;
+  const { memberId, password } = member;
   const onChange = (e) => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setInputs({
-      ...inputs, // 기존의 input 객체를 복사한 뒤
+    setMember({
+      ...member, // 기존의 member 객체를 복사한 뒤
       [name]: value, // name 키를 가진 값을 value 로 설정
     });
   };
-  const onReset = () => {
-    setInputs({
+  //전송 후  인풋 창 초기화
+
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    if (member.memberId.trim() === "" || member.password.trim() === "") {
+      alert("체크해주세요");
+    }
+    dispatch(__postLogin(member));
+    setMember({
       memberId: "",
       password: "",
     });
     memberIdInput.current.focus();
   };
+  //로그아웃 구현하기
+  // const loginCheck = useSelector((state) => state.memberListSlice.isLogin);
 
   return (
     <ModalContentWrap>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          // if (
-          //   login.loginID.trim() === "" ||
-          //   login.loginPW.trim() === "" ||
-          // ) {
-          //   return alert("모든 항목 입력해주세요");
-          // }
-        }}
+      // onSubmit={(e) => {
+      //   e.preventDefault();
+      //   // if (
+      //   //   login.loginID.trim() === "" ||
+      //   //   login.loginPW.trim() === "" ||
+      //   // ) {
+      //   //   return alert("모든 항목 입력해주세요");
+      //   // }
+      // }}
       >
         <div>
           <h2> LOGIN</h2>
@@ -61,7 +74,7 @@ const Login = (props) => {
             />
           </LoginInputContainer>
           <LoginButtonContainer>
-            <MainButton onClick={onReset}> 로그인하기</MainButton>
+            <MainButton onClick={onSubmitLogin}> 로그인하기</MainButton>
             <MainButton onClick={props.setModalIsOpen}>취소하기</MainButton>
           </LoginButtonContainer>
         </div>
