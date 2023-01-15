@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 const Logo = () => {
   const navigate = useNavigate();
   return (
-    <LogoImage onClick={() => navigate("/")} alt="logo192" src="logo192.png" />
+    <LogoImage
+      onClick={() => navigate("/")}
+      alt="quizhubLogo"
+      src="quizhubLogo.png"
+    />
   );
 };
 
 export default Logo;
 const LogoImage = styled.img`
-  width: 150px;
-  height: 150px;
+  object-fit: contain;
+  width: 280px;
+  height: 90px;
   cursor: pointer;
 `;
