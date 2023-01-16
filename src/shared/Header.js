@@ -4,6 +4,7 @@ import Logo from "../components/Logo";
 import { IoIosHome } from "react-icons/io";
 import { SlArrowLeft } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ const Header = () => {
   const goToback = () => {
     navigate(-1);
   };
+  const locationNow = useLocation();
+
+  if (locationNow.pathname === "/") return null;
 
   return (
     <>
