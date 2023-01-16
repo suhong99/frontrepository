@@ -7,20 +7,20 @@ import styled from "styled-components";
 
 const List = () => {
   const dispatch = useDispatch();
-  const { list } = useSelector((state) => state.list);
-  console.log("list입니다.", list);
-  useEffect(() => {
-    dispatch(__getList());
-  }, [dispatch]);
+  //const { list } = useSelector((state) => state.list);
+
+  // useEffect(() => {
+  //   dispatch(__getList());
+  // }, [dispatch]);
   return (
     <>
       <Layout>
         <StTitle>게시판</StTitle>
         {/* <Card /> */}
         <div>
-          {list.map((post) => (
+          {/* {list.map((post) => (
             <Card key={post.id} post={post} />
-          ))}
+          ))} */}
         </div>
       </Layout>
     </>
