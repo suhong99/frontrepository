@@ -13,8 +13,10 @@ const Post = () => {
   // const { isLoading, error } = useSelector((state) => state.records);
 
   const [post, setPost] = useState({
+    id: "",
     title: "",
     content: "",
+    username: "",
     answer: "",
   });
 

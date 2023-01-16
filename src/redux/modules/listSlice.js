@@ -30,7 +30,7 @@ export const __updateList = createAsyncThunk(
 );
 
 const initialState = {
-  post: {
+  list: {
     id: 0,
     content: "",
     username: "",
@@ -40,12 +40,12 @@ const initialState = {
   isLoading: false,
 };
 
-export const postSlice = createSlice({
+export const listSlice = createSlice({
   name: "list",
   initialState,
   reducers: {
     clearPost: (state) => {
-      state.post = {
+      state.list = {
         id: 0,
         content: "",
         username: "",
@@ -79,5 +79,5 @@ export const postSlice = createSlice({
   },
 });
 
-export const { List } = postSlice.actions;
-export default postSlice.reducer;
+export const { List } = listSlice.actions;
+export default listSlice.reducer;
