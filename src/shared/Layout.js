@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 const LayoutStyles = styled.div`
-  width: 1920px;
+  max-width: 1536px;
+  /* max-width: 1920px; */
+  /* max-height: 864px; */
+  width: 100%;
   display: flex;
   align-items: center;
   color: black;

@@ -8,6 +8,11 @@ import Login from "../components/Login";
 const Home = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  //todo :로그인 확인 기능 구현해야함 -->LoginHeader
+  const logOut = () => {
+    sessionStorage.clear();
+    window.location.reload();
+  };
   return (
     <MainWrap>
       <MainHead>
@@ -18,27 +23,22 @@ const Home = () => {
             style={{
               content: {
                 position: "fixed",
-                // top: 0,
-                // left: 0,
-                // right: 0,
-                // bottom: 0,
                 marginLeft: "auto",
                 marginRight: "auto",
                 border: "1px solid #ccc",
                 width: "500px",
-                marginTop: "200px",
-                // height: "300px",
+                marginTop: "250px",
+                height: "300px",
                 borderRadius: "4px",
                 padding: "20px",
+                display: "flex",
               },
             }}
             isOpen={modalIsOpen}
+            ariaHideApp={false}
             onRequestClose={() => setModalIsOpen(false)}
           >
-            <MainButton onClick={() => setModalIsOpen(false)}>
-              Modal Close
-            </MainButton>
-            <Login />
+            <Login setModalIsOpen={() => setModalIsOpen(false)} />
           </Modal>
 
           <MainButton onClick={() => navigate("/SignUp")}>회원가입</MainButton>
