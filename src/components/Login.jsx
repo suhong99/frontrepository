@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import MainButton from "./MainButton";
 import { __postLogin } from "../redux/modules/memeberListSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -35,8 +35,6 @@ const Login = (props) => {
     });
     memberIdInput.current.focus();
   };
-  //로그아웃 구현하기
-  // const loginCheck = useSelector((state) => state.memberListSlice.isLogin);
 
   return (
     <ModalContentWrap>

@@ -8,6 +8,11 @@ import Login from "../components/Login";
 const Home = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  //todo :로그인 확인 기능 구현해야함 -->LoginHeader
+  const logOut = () => {
+    sessionStorage.clear();
+    window.location.reload();
+  };
   return (
     <MainWrap>
       <MainHead>

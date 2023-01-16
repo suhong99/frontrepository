@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginHeader from "../components/Header/LoginHeader";
 import Home from "../pages/Home";
 import List from "../pages/List";
 import Post from "../pages/Post";
@@ -10,6 +11,7 @@ import Layout from "./Layout";
 const Router = () => {
   return (
     <BrowserRouter>
+      <LoginHeader />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

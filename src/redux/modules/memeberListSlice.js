@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import http from "../../api/http";
-import axios from "axios";
+// import axios from "axios";
 const initialState = {
-  userList: [
+  memberList: [
     {
-      emaimemberIdl: "",
+      memberId: "",
       nickname: "",
       password: "",
     },
@@ -32,18 +32,18 @@ export const __postLogin = createAsyncThunk(
   "POST_LOGIN",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      const { data } = await axios.post(
-        "3.38.99.102:3010/members/login",
-        payload
-      );
-      console.log(data);
-      // .then((res) => {
-      //   sessionStorage.setItem("access_token", res.headers.access_token);
-      //   sessionStorage.setItem("refresh_token", res.headers.refresh_token);
-      //   return res;
-      // });
-      return thunkAPI.fulfillWithValue(data.data);
+      // console.log(payload);
+      const { data } = await http
+        .post("/members/login", payload)
+        .then((res) => {
+          // console.log(res.data.accessToken);
+          sessionStorage.setItem("accessToken", res.data.accessToken);
+          sessionStorage.setItem("refreshToken", res.data.refreshToken); //수정 해야할 듯
+          return res;
+        });
+      console.log(data); // 성공하면 토큰이 찍힘
+
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -73,7 +73,8 @@ const memberListSlice = createSlice({
     [__postLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isLogin = true;
-      //   sessionStorage.setItem("userinfo", JSON.stringify(action.payload));
+      sessionStorage.setItem("memberinfo", JSON.stringify(action.payload));
+      console.log(action.payload); //
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
