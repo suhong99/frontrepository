@@ -41,30 +41,6 @@ const Post = () => {
   //   return <div>{error.message}</div>;
   // }
 
-  // const onSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (
-  //     post.title.trim() === "" ||
-  //     post.content.trim() === "" ||
-  //     post.answer.trim() === ""
-  //   ) {
-  //     return alert("모든 항목을 입력해주세요");
-  //   }
-
-  //   const _post = {
-  //     title: post.title,
-  //     content: post,
-  //     answer: post.answer,
-  //     isDone: false,
-  //   };
-
-  //   dispatch(__addPost(_post));
-  // setPost({
-  //   title: "",
-  //   body: "",
-  //   answer: "",
-  // });
-
   console.log(post);
 
   return (
@@ -83,6 +59,7 @@ const Post = () => {
               }
 
               dispatch(__addPost(post));
+              navigate("/List");
             }}
           >
             <StMain>
@@ -124,12 +101,16 @@ const Post = () => {
 export default Post;
 
 const StForm = styled.form`
-  width: 100%;
-  height: 100%;
+  width: 100vh;
+  height: 100vh;
 `;
 
 const StContainer = styled.div`
-  height: 100%;
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const StMain = styled.div`
@@ -148,7 +129,7 @@ const StInput = styled.input`
   border-radius: 20px;
   box-sizing: border-box;
   height: 100px;
-  width: 100%;
+  width: 800px;
   outline: none;
   border-radius: 8px;
   padding: 12px;
@@ -159,7 +140,7 @@ const Textarea = styled.textarea`
   border: 5px solid;
   box-sizing: border-box;
   border-radius: 15px;
-  width: 100%;
+  width: 800px;
   padding: 12px;
   font-size: 30px;
 `;
