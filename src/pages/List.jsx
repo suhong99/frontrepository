@@ -14,15 +14,13 @@ const List = () => {
   // }, [dispatch]);
   return (
     <>
-      <Layout>
-        <StTitle>게시판</StTitle>
-        {/* <Card /> */}
-        <div>
-          {/* {list.map((post) => (
+      <StTitle>게시판</StTitle>
+      {/* <Card /> */}
+      <div>
+        {/* {list.map((post) => (
             <Card key={post.id} post={post} />
           ))} */}
-        </div>
-      </Layout>
+      </div>
     </>
   );
 };
