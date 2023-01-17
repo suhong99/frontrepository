@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Logo from "../components/Logo";
-import { IoIosHome } from "react-icons/io";
+import { FaRocket } from "react-icons/fa";
 import { SlArrowLeft } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -25,7 +25,7 @@ const Header = () => {
       <Stcontainer>
         <Sthead>
           <Sthome>
-            <IoIosHome onClick={goToHome} size="85" />
+            <FaRocket onClick={goToHome} size="70" />
           </Sthome>
           <Stlogo>
             <Logo />

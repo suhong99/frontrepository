@@ -7,7 +7,7 @@ import Post from "../pages/Post";
 import SignUp from "../pages/SignUp";
 import Layout from "./Layout";
 import Header from "./Header";
-// import Detail from "../pages/Detail";
+import Detail from "../pages/Detail";
 // import Header from "./Header";
 
 const Router = () => {
@@ -21,6 +21,7 @@ const Router = () => {
           <Route path="/List" element={<List />} />
           <Route path="/Post" element={<Post />} />
           <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Detail" element={<Detail />} />
         </Routes>
       </Layout>
     </BrowserRouter>
