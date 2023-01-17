@@ -20,7 +20,7 @@ const List = () => {
 
   return (
     <>
-      <StTitle>문제를 풀어봅시다.</StTitle>
+      <StTitle>게시판</StTitle>
       {/* 무한스크롤 아래로 + 오른쪽으로가는 슬라이드 */}
       {/* <Slide /> */}
       <StListContainer>

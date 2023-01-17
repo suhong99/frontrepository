@@ -52,15 +52,18 @@ const Detail = () => {
   return (
     <>
       <StContainer>
+        <StTitle>문제를 풀어봅시다.</StTitle>
         <StMain>
-          <StTitle>문제를 풀어봅시다.</StTitle>
-          <StBox boxHeight="50px">{detail?.title}</StBox>
-          <StBox boxHeight="200px">{detail?.content}</StBox>
-
-          <StInputWrap>
-            <StInput placeholder="답제출하는 곳" />
-            <StButton>작성하기</StButton>
-          </StInputWrap>
+          <StWrap>
+            <StinputBox>
+              <StBox boxHeight="50px">{detail?.title}</StBox>
+              <StBox boxHeight="200px">{detail?.content}</StBox>
+              <StInputWrap>
+                <StInput placeholder="답제출하는 곳" />
+                <StButton>작성하기</StButton>
+              </StInputWrap>
+            </StinputBox>
+          </StWrap>
         </StMain>
 
         <StIcon>
@@ -81,49 +84,73 @@ const Detail = () => {
 export default Detail;
 
 const StContainer = styled.div`
-  border: 1px solid red;
+  width: 100vh;
+  height: 100vh;
 `;
 
 const StMain = styled.div`
-  border: 1px solid blue;
-  margin-top: 40px;
+  box-sizing: border-box;
+  border-radius: 0 0 20px 20px;
+  width: 700px;
+  height: 500px;
+  padding: 10px;
+  margin: 0 10px;
+  display: flex;
+  justify-content: center;
+  background-image: linear-gradient(
+    to top,
+    #bdc2e8 0%,
+    #bdc2e8 1%,
+    #e6dee9 100%
+  );
+`;
+
+const StWrap = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+  gap: 30px;
 `;
 
 const StTitle = styled.div`
-  /* border: 2px solid; */
-  width: 300px;
-  border-radius: 20px;
-  margin-top: 5%;
-  background-color: #3e405e;
+  border-radius: 20px 20px 0 0;
+  width: 700px;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 10px 0 0 10px;
+  background-image: linear-gradient(
+    to top,
+    #1e3c72 0%,
+    #1e3c72 1%,
+    #2a5298 100%
+  );
+  margin-top: 40px;
   color: white;
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 600;
   text-align: center;
-  padding: 10px;
 `;
 
+const StinputBox = styled.div``;
+
 const StBox = styled.div`
-  border: 3px solid;
+  background-color: white;
   border-radius: 10px;
-  box-sizing: border-box;
   height: ${(props) => props.boxHeight};
   width: 500px;
   outline: none;
   padding: 12px;
   font-size: 20px;
+  margin: 30px;
 `;
 
 const StInputWrap = styled.div`
   margin: 20px;
   display: flex;
+  padding: 20px;
 `;
+
 const StInput = styled.input`
-  border: 3px solid;
+  border: none;
   border-radius: 10px 0 0 10px;
   box-sizing: border-box;
   height: 50px;
@@ -146,11 +173,11 @@ const StButton = styled.button`
 `;
 
 const StIcon = styled.div`
-  border: 1px solid;
+  border: 3px solid red;
   display: flex;
   justify-content: flex-start;
-  gap: 5px;
-  font-size: 25px;
+  gap: 10px;
+  font-size: 30px;
   font-weight: 500;
   padding-left: 30px;
   cursor: pointer;
