@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../components/Logo";
@@ -8,7 +8,19 @@ import Login from "../components/Login";
 const Home = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [loginCheck, setLoginCheck] = useState(false);
+  // console.log(loginCheck);
+  // const [memberinfo, setMemberinfo] = useState("");
+
+  //로그인 체크 확인 시 세션스토리지에 저장된 유저정보 불러오기
+  // 유저 정보가 존재한다면, LoginCheck를 true로
+  useEffect(() => {
+    const memberinfomation = JSON.parse(sessionStorage.getItem("memberinfo"));
+    // setMemberinfo(memberinfomation);
+    memberinfomation ? setLoginCheck(true) : setLoginCheck(false);
+  }, [loginCheck]);
   //todo :로그인 확인 기능 구현해야함 -->LoginHeader
+  //추후 로그인이 확인되면,  버튼을 로그인 -> 로그아웃으로 바꿔야함.
   const logOut = () => {
     sessionStorage.clear();
     window.location.reload();
@@ -18,7 +30,12 @@ const Home = () => {
       <MainHead>
         <Logo />
         <ButtonContainer>
-          <MainButton onClick={() => setModalIsOpen(true)}>로그인</MainButton>
+          {loginCheck ? (
+            <MainButton onClick={logOut}>로그아웃</MainButton>
+          ) : (
+            <MainButton onClick={() => setModalIsOpen(true)}>로그인</MainButton>
+          )}
+
           <Modal
             style={{
               content: {

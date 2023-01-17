@@ -89,9 +89,9 @@ const ModalContentWrap = styled.div`
 `;
 
 const LoginInput = styled.input`
-  width: 400px;
-  font-size: 20px;
-  height: 40px;
+  /* width: 75vw; //todo : 기능적인 부분 먼저하고 , 반응형값으로 고치기
+  font-size: 3.75vw;
+  height: 7.49vw; */
   padding: 10px;
 `;
 
