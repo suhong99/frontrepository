@@ -11,7 +11,6 @@ const initialState = {
   ],
   isLoading: false,
   error: null,
-  isLogin: false,
 };
 
 //회원가입 POST요청
@@ -32,13 +31,15 @@ export const __postLogin = createAsyncThunk(
   "POST_LOGIN",
   async (payload, thunkAPI) => {
     try {
-      // console.log(payload);
+      console.log(payload);
       const { data } = await http
         .post("/members/login", payload)
         .then((res) => {
-          // console.log(res.data.accessToken);
+          // console.log(res);
+
           sessionStorage.setItem("accessToken", res.data.accessToken);
-          sessionStorage.setItem("refreshToken", res.data.refreshToken); //수정 해야할 듯
+          sessionStorage.setItem("refreshToken", res.data.refreshToken);
+
           return res;
         });
       console.log(data); // 성공하면 토큰이 찍힘
@@ -72,9 +73,10 @@ const memberListSlice = createSlice({
     },
     [__postLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isLogin = true;
       sessionStorage.setItem("memberinfo", JSON.stringify(action.payload));
-      console.log(action.payload); //
+      window.location.reload();
+
+      // console.log(action.payload); //
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
