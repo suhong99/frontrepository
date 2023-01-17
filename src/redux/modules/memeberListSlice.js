@@ -31,21 +31,22 @@ export const __postLogin = createAsyncThunk(
   "POST_LOGIN",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      const { data } = await http
-        .post("/members/login", payload)
-        .then((res) => {
-          // console.log(res);
+      // console.log(payload);
+      const data = await http.post("/members/login", payload).then((res) => {
+        sessionStorage.setItem("access_token", res.headers.access_token);
+        // sessionStorage.setItem("refreshToken", res.data.refreshToken);
 
-          sessionStorage.setItem("accessToken", res.data.accessToken);
-          sessionStorage.setItem("refreshToken", res.data.refreshToken);
-
-          return res;
-        });
-      console.log(data); // 성공하면 토큰이 찍힘
-
-      return thunkAPI.fulfillWithValue(data);
+        return res;
+      });
+      // console.log(data, "data"); // 성공하면 토큰이 찍힘 실패시 데이터 안 찎힘
+      if (data.status === 200) {
+        alert("로그인 성공");
+      }
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      if (error.response.status === 409) {
+        alert("아이디와 패스워드를 확인해주세요");
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }
