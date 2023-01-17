@@ -1,19 +1,22 @@
 {
-  "posts": [
+  "list": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "title": "s",
+      "content": "s",
+      "answer": "s",
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "title": "s",
+      "content": "s",
+      "answer": "s",
+      "id": 2
+    },
+    {
+      "title": "dd",
+      "content": "dd",
+      "answer": "dd",
+      "id": 3
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

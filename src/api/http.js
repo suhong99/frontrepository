@@ -1,6 +1,7 @@
 import axios from "axios";
 const http = axios.create({
-  baseURL: "http://3.38.99.102:3010",
+  // baseURL: "http://f1rstweb.shop",
+  baseURL: "http://localhost:3001/",
   timeout: 100000,
   // headers: { "X-Custom-Header": "foobar" },
   //   Authorization :  ////token 넣음

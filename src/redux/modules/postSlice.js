@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { isDev, serverUrl } from ".";
+import http from "../../api/http";
 
 const initialState = {
   list: [],
@@ -13,7 +13,7 @@ export const __getPost = createAsyncThunk(
   "GET_POST",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get("http://localhost:3001/list");
+      const { data } = await http.get("/list");
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -26,7 +26,8 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-      const { data } = await axios.post("http://localhost:3001/list", payload);
+      const { data } = await http.post("/list", payload);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,9 +39,7 @@ export const __deletePost = createAsyncThunk(
   "DELETE_POST",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:3001/list/${payload}`
-      );
+      const { data } = await http.delete(`/list/${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
