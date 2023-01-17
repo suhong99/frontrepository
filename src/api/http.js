@@ -1,11 +1,19 @@
 import axios from "axios";
 const http = axios.create({
-  baseURL: "http://f1rstweb.shop",
+  baseURL: "http://f1rstweb.shop/quiz",
   timeout: 100000,
+  headers: {
+    "content-type": "application/json;charset=UTF-8",
+    accept: "application/json,",
+  },
   // headers: { "X-Custom-Header": "foobar" },
   //   Authorization :  ////token 넣음
 });
-// console.log(http.baseURL);
-// console.log("safds");
-// console.log(http);
+
+http.interceptors.request.use(function (config) {
+  const accessToken = sessionStorage.getItem("accessToken");
+  config.headers.common["X-AUTH-TOKEN"] = `${accessToken}`;
+  return config;
+});
+
 export default http;

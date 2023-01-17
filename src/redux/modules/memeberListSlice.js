@@ -75,7 +75,7 @@ const memberListSlice = createSlice({
     [__postLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
       sessionStorage.setItem("memberinfo", JSON.stringify(action.payload));
-      window.location.reload();
+      // window.location.reload();
 
       // console.log(action.payload); //
     },
