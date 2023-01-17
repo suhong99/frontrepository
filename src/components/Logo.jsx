@@ -15,7 +15,7 @@ const Logo = () => {
 export default Logo;
 const LogoImage = styled.img`
   object-fit: contain;
-  width: 280px;
+  width: 220px;
   height: 90px;
   cursor: pointer;
 `;

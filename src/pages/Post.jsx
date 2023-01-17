@@ -62,35 +62,41 @@ const Post = () => {
               navigate("/List");
             }}
           >
+            <StTitle>문제를 만들어봅시다.</StTitle>
             <StMain>
-              <StInput
-                type="text"
-                placeholder="제목을 적어주세요."
-                name={"title"}
-                value={post.title}
-                onChange={onChangeHandler}
-              />
+              <StinputBox>
+                <StInput
+                  type="text"
+                  placeholder="제목을 적어주세요."
+                  name={"title"}
+                  value={post.title}
+                  onChange={onChangeHandler}
+                />
+              </StinputBox>
+              <StinputBox>
+                <Textarea
+                  name={"content"}
+                  rows="12"
+                  onChange={onChangeHandler}
+                  placeholder="내용을 적어주세요."
+                  value={post.content}
+                />
+              </StinputBox>
+              <StinputBox>
+                <StInput
+                  type="text"
+                  onChange={onChangeHandler}
+                  placeholder="답을 적어주세요."
+                  value={post.answer}
+                  name={"answer"}
+                />
+              </StinputBox>
 
-              <Textarea
-                name={"content"}
-                rows="10"
-                onChange={onChangeHandler}
-                placeholder="내용을 적어주세요."
-                value={post.content}
-              />
-
-              <StInput
-                type="text"
-                onChange={onChangeHandler}
-                placeholder="답을 적어주세요."
-                value={post.answer}
-                name={"answer"}
-              />
+              <Stbuttonwrap>
+                <Stbutton type="submit">작성하기</Stbutton>
+                <Stbutton type="submit">취소하기</Stbutton>
+              </Stbuttonwrap>
             </StMain>
-            <Stbuttonwrap>
-              <Stbutton type="submit">작성하기</Stbutton>
-              <Stbutton type="submit">취소하기</Stbutton>
-            </Stbuttonwrap>
           </StForm>
         </StContainer>
       </Layout>
@@ -106,43 +112,76 @@ const StForm = styled.form`
 `;
 
 const StContainer = styled.div`
-  /* border: 1px solid red; */
+  /* border: 4px solid red; */
+  /* height: 10; */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+`;
+
+const StTitle = styled.div`
+  /* border: 5px solid gray; */
+  border-radius: 20px 20px 0 0;
+  width: 700px;
+  padding: 10px;
+  margin: 10px 0 0 10px;
+  background-image: linear-gradient(
+    to top,
+    #1e3c72 0%,
+    #1e3c72 1%,
+    #2a5298 100%
+  );
+  margin-top: 40px;
+  color: white;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+`;
+
+const StinputBox = styled.div`
+  display: flex;
   justify-content: center;
 `;
 
 const StMain = styled.div`
-  margin-top: 15%;
-  width: 100vh;
-  height: 50vh;
-  padding: 20px;
+  /* border: 5px solid gray; */
+  border-radius: 0 0 20px 20px;
+  width: 700px;
+  height: 700px;
+  padding: 10px;
+  margin: 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 30px;
+  background-image: linear-gradient(
+    to top,
+    #bdc2e8 0%,
+    #bdc2e8 1%,
+    #e6dee9 100%
+  );
 `;
 
 const StInput = styled.input`
-  border: 5px solid;
+  margin-top: 20px;
+  border: none;
   border-radius: 20px;
   box-sizing: border-box;
-  height: 100px;
-  width: 800px;
+  height: 60px;
+  width: 600px;
   outline: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 30px;
+  padding: 30px;
+  font-size: 20px;
 `;
 
 const Textarea = styled.textarea`
-  border: 5px solid;
+  border: none;
+  border-radius: 20px;
   box-sizing: border-box;
-  border-radius: 15px;
-  width: 800px;
+  width: 600px;
   padding: 12px;
-  font-size: 30px;
+  font-size: 20px;
 `;
 
 const Stbuttonwrap = styled.div`
@@ -156,9 +195,9 @@ const Stbuttonwrap = styled.div`
 const Stbutton = styled.button`
   border: none;
   border-radius: 10px;
-  width: 300px;
-  height: 55px;
-  font-size: 30px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
   color: white;
   padding: 10px;
   margin: 10px;

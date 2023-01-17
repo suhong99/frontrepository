@@ -4,46 +4,65 @@ import styled from "styled-components";
 const SignUp = () => {
   return (
     <SignUpLayout>
-      <SignUpHeader>회원가입</SignUpHeader>
       <SingUpBox>
-        <SignUpWords>아이디</SignUpWords>
+        <SignUpHeader>Sign Up</SignUpHeader>
         <InputBox>
-          <SingUpInput placeholder="ID" />
+          <SingUpInput placeholder="ID를 입력해주세요" />
           <MainButton>인증하기</MainButton>
         </InputBox>
-        <SignUpWords>닉네임</SignUpWords>
+
         <InputBox>
-          <SingUpInput placeholder="닉네임 박스 크기 조절해야 할듯" />
+          <SingUpInput placeholder="NickName를 입력해주세요" />
           <MainButton>인증하기</MainButton>
         </InputBox>
-        <SignUpWords>비밀번호</SignUpWords>
+
         <PasswordBox>
-          <SingUpPasswordInput placeholder="비밀번호" />
-          <SingUpPasswordInput placeholder="비밀번호 확인" />
+          <SingUpPasswordInput placeholder="Password를 입력해주세요" />
+          <SingUpPasswordInput placeholder="Password를 확인해주세요" />
         </PasswordBox>
       </SingUpBox>
+      <StSignBack>이미지</StSignBack>
     </SignUpLayout>
   );
 };
 
 export default SignUp;
 const SignUpLayout = styled.div`
+  /* border: 4px solid blue; */
+  margin-top: 5%;
+  width: 900px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-image: linear-gradient(
+    to top,
+    #bdc2e8 0%,
+    #bdc2e8 1%,
+    #e6dee9 100%
+  );
 `;
+
+const StSignBack = styled.div`
+  border: 2px solid red;
+  display: flex;
+  width: 500px;
+`;
+
 const SingUpBox = styled.div`
+  /* border: 2px solid red; */
   font-weight: bold;
   font-size: 20px;
-  border: 2px solid black;
-  border-radius: 15px;
-  padding: 25px 5px;
+  padding: 25px;
+  margin: 20px;
   width: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  gap: 20px;
 `;
 
 const SignUpHeader = styled.div`
   font-weight: bolder;
   font-size: 40px;
+  margin: 15px;
 `;
 
 const SingUpInput = styled.input`
@@ -54,7 +73,7 @@ const SingUpInput = styled.input`
 `;
 const SingUpPasswordInput = styled.input`
   /* font-size: 20px; */
-  height: 30px;
+  height: 40px;
   width: 400px;
   padding: 10px;
   border-radius: 10px;

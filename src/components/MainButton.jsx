@@ -11,8 +11,12 @@ const MainButtonStyle = styled.button`
   color: white;
   font-size: 20px;
   border-color: transparent;
-  height: 50px;
-  width: 180px;
-  border-radius: 4px;
+  height: 35px;
+  width: 150px;
+  border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background-color: gray;
+    color: white;
+  }
 `;

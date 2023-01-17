@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import memberList from "../modules/memeberListSlice";
 import post from "../modules/postSlice";
-import list from "../modules/listSlice";
+import detail from "../modules/detailSlice";
 
 const store = configureStore({
   reducer: {
     memberList,
     post,
-    list,
+    detail,
   },
 });
 

@@ -12,7 +12,9 @@ export const __getPostDetail = createAsyncThunk(
   "GET_POST_DETAIL",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get("http://localhost:3001/list");
+      // console.log(payload);
+      const { data } = await axios.get(`http://localhost:3001/list/${payload}`);
+      // console.log("데이터", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -32,8 +34,8 @@ export const __updatePostDetail = createAsyncThunk(
   }
 );
 
-const listSlice = createSlice({
-  name: "list",
+const detailSlice = createSlice({
+  name: "detail",
   initialState,
   reducers: {},
   extraReducers: {
@@ -41,8 +43,9 @@ const listSlice = createSlice({
       state.isLoading = true;
     },
     [__getPostDetail.fulfilled]: (state, action) => {
+      // console.log("액션", action.payload);
       state.isLoading = false;
-      state.todos = action.payload;
+      state.list = action.payload;
     },
     [__getPostDetail.rejected]: (state, action) => {
       state.isLoading = false;
@@ -64,5 +67,5 @@ const listSlice = createSlice({
   },
 });
 
-export const {} = listSlice.actions;
-export default listSlice.reducer;
+export const {} = detailSlice.actions;
+export default detailSlice.reducer;
