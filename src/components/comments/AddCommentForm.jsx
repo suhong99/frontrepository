@@ -2,26 +2,23 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { __addComment } from "../redux/modules/commentsSlice";
-
+import { __addComment } from "../../redux/modules/commentsSlice";
 const AddCommentForm = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const [comment, setComment] = useState({
-    username: "",
-    content: "",
+    comment: "",
   });
   // console.log(comment);
 
   const onAddCommentButtonHandler = (event) => {
     event.preventDefault();
-    if (comment.content.trim() === "" || comment.username.trim() === "") {
+    if (comment.comment.trim() === "") {
       return alert("모든 항목을 입력해주세요.");
     }
-    dispatch(__addComment({ recordId: id, ...comment }));
+    dispatch(__addComment({ comment }));
     setComment({
-      username: "",
       content: "",
     });
   };

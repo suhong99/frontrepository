@@ -31,10 +31,10 @@ const SignUp = () => {
   // 중복확인을 해야하는건 툴킷을 통해서 값 받는게 편할듯?
   // 비밀번호와 비밀번호 확인은 useState으로 하면 될듯?
 
-  const [passPossible, setPassPossible] = useState(false);
-  const [passCheckPossible, setPassCheckPossible] = useState(false);
+  // const [passPossible, setPassPossible] = useState(false);
+  // const [passCheckPossible, setPassCheckPossible] = useState(false);
 
-  // 입력 조건 정규식
+  // 입력 조건 정규식 validation?
   const regMemberId = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
 
   const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;

@@ -9,7 +9,7 @@ const Card = ({ post }) => {
   return (
     <>
       <StContainer>
-        <Stcard onClick={() => navigate(`/List/${post.qId}`)}>
+        <Stcard onClick={() => navigate(`/Comments/${post.qId}`)}>
           <Stcardinner>
             <Sttop>
               <div>
