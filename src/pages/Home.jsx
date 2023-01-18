@@ -5,25 +5,31 @@ import Logo from "../components/Logo";
 import MainButton from "../components/MainButton";
 import Modal from "react-modal";
 import Login from "../components/Login";
+import { useDispatch, useSelector } from "react-redux";
+import { checkLogin, checkLogout } from "../redux/modules/memeberListSlice";
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [loginCheck, setLoginCheck] = useState(false);
-  // console.log(loginCheck);
+  // const [loginCheck, setLoginCheck] = useState(false);
   // const [memberinfo, setMemberinfo] = useState("");
-
   //로그인 체크 확인 시 세션스토리지에 저장된 유저정보 불러오기
   // 유저 정보가 존재한다면, LoginCheck를 true로
+  const loginCheck = useSelector((state) => state.memberList.isLogin);
   useEffect(() => {
     const memberinfomation = JSON.parse(sessionStorage.getItem("memberinfo"));
-    // setMemberinfo(memberinfomation);
-    memberinfomation ? setLoginCheck(true) : setLoginCheck(false);
-  }, [loginCheck]);
-  //todo :로그인 확인 기능 구현해야함 -->LoginHeader
-  //추후 로그인이 확인되면,  버튼을 로그인 -> 로그아웃으로 바꿔야함.
+    // memberinfomation ? dispatch(checkLogin()) : dispatch(checkLogout());
+    if (memberinfomation) {
+      dispatch(checkLogin());
+    }
+
+    // console.log(memberinfomation);
+  }, [dispatch]);
+
   const logOut = () => {
     sessionStorage.clear();
-    window.location.reload();
+    dispatch(checkLogout());
+    // window.location.reload();
   };
   return (
     <MainWrap>
@@ -55,7 +61,10 @@ const Home = () => {
             ariaHideApp={false}
             onRequestClose={() => setModalIsOpen(false)}
           >
-            <Login setModalIsOpen={() => setModalIsOpen(false)} />
+            <Login
+              setModalIsOpen={() => setModalIsOpen(false)}
+              // setModal={setModalIsOpen()}
+            />
           </Modal>
 
           <MainButton onClick={() => navigate("/SignUp")}>회원가입</MainButton>

@@ -3,7 +3,11 @@ import MainButton from "../components/MainButton";
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { __postMember } from "../redux/modules/memeberListSlice";
+import {
+  __postMember,
+  __checkMemberId,
+  __checkMemberNick,
+} from "../redux/modules/memeberListSlice";
 import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -18,11 +22,17 @@ const SignUp = () => {
   const [member, setMember] = useState(initialState);
   //멤버 스테이트 구조분해 할당
   const { memberId, password, nickname, passwordCheck } = member;
-  //초기값
+  //가입 조건 초기값
   const [memberIdInput, setMemberIdInput] = useState("");
   const [passInput, setPassInput] = useState("");
   const [passCheckInput, setPassCheckInput] = useState("");
-  const [nicknameInput, setNicknameInput] = useState("");
+
+  //제출 전 조건 설정
+  // 중복확인을 해야하는건 툴킷을 통해서 값 받는게 편할듯?
+  // 비밀번호와 비밀번호 확인은 useState으로 하면 될듯?
+
+  const [passPossible, setPassPossible] = useState(false);
+  const [passCheckPossible, setPassCheckPossible] = useState(false);
 
   // 입력 조건 정규식
   const regMemberId = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
@@ -39,23 +49,20 @@ const SignUp = () => {
     if (name === "memberId")
       !regMemberId.test(value)
         ? setMemberIdInput(
-            `숫자와 영어가 한 개 이상 포함된
-  4글자 이상으로 된 비밀번호`
+            `숫자와 대,소문자가 각각 한 개 이상 포함된
+  4~20글자로 된 아이디`
           )
-        : setMemberIdInput("");
+        : setMemberIdInput("중복 확인 가능합니다.");
 
     if (name === "password")
       !regPassword.test(value)
         ? setPassInput(
-            `숫자와 영어가 한 개 이상 포함된
-  4글자 이상으로 된 비밀번호`
+            `숫자와 대,소문자가 각각 한 개 이상 포함된
+  4~20글자로 된 비밀번호`
           )
-        : setPassInput("");
-
-    // if (name === "nickname")
-    //   !regNickname.test(value)
-    //     ? setNicknameInput("닉네임은 2-6자의 한글만 입력 가능합니다.")
-    //     : setNicknameInput("");
+        : //여기다가 함수 동시에 하고 싶은데 어떻게 해야할 지 모르겠어요.
+          //          setPassPossible(true)
+          setPassInput("");
 
     if (name === "passwordCheck")
       password !== value
@@ -71,7 +78,7 @@ const SignUp = () => {
       passwordCheck.trim() === "" ||
       nickname.trim() === ""
     ) {
-      return alert("아이디랑 비밀번호를 입력해주세요!");
+      return alert("아이디,닉네임,비밀번호를 입력해주세요!");
     }
 
     dispatch(
@@ -83,21 +90,32 @@ const SignUp = () => {
     );
     navigate("/");
   };
+  // 아이디 중복확인
+  const onIdCheckhandler = (e) => {
+    e.preventDefault();
+
+    dispatch(__checkMemberId(memberId));
+  };
+  const onNickCheckhandler = (e) => {
+    e.preventDefault();
+
+    dispatch(__checkMemberNick(nickname));
+  };
 
   return (
     <SignUpLayout>
       <SignUpHeader>회원가입</SignUpHeader>
-      <SingUpForm onSubmit={onSubmitUserHandler}>
+      <SingUpForm onSubmit={(e) => e.preventDefault()}>
         <SignUpWords>아이디</SignUpWords>
         <InputBox>
           <SignUpInput
-            type="memberId"
+            type="text"
             name="memberId"
             value={memberId}
             placeholder="ID를 입력해주세요"
             onChange={onChangeMemberHandler}
           />
-          <MainButton>인증하기</MainButton>
+          <MainButton onClick={onIdCheckhandler}>중복확인</MainButton>
         </InputBox>
         <HelperText id="help-memberId" className="help">
           {memberIdInput}
@@ -105,17 +123,17 @@ const SignUp = () => {
         <SignUpWords>닉네임</SignUpWords>
         <InputBox>
           <SignUpInput
-            type="nickname"
+            type="text"
             name="nickname"
             value={nickname}
             placeholder="닉네임을 입력해주세요"
             onChange={onChangeMemberHandler}
           />
-          <MainButton>인증하기</MainButton>
+          <MainButton onClick={onNickCheckhandler}>중복확인</MainButton>
         </InputBox>
-        <p id="help-nickname" className="help">
+        {/* <p id="help-nickname" className="help">
           {nicknameInput}
-        </p>
+        </p> */}
         <SignUpWords>비밀번호</SignUpWords>
         <PasswordBox>
           <SingUpPasswordInput
@@ -139,6 +157,7 @@ const SignUp = () => {
             {passCheckInput}
           </p>
         </PasswordBox>
+        <MainButton onClick={onSubmitUserHandler}> 가입하기</MainButton>
       </SingUpForm>
     </SignUpLayout>
   );
