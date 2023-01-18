@@ -6,7 +6,7 @@ export const __getCommentsThunk = createAsyncThunk(
   "GET_COMMENTS",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/comments`);
+      const { data } = await axios.get(`/comments`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -15,12 +15,10 @@ export const __getCommentsThunk = createAsyncThunk(
 );
 
 export const __getCommnetsByTodoId = createAsyncThunk(
-  "GET_COMMENT_BY_TODO_ID",
-  async (arg, thunkAPI) => {
+  "GET_COMMENT_BY_POST_ID",
+  async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/comments?todoId=${arg}`
-      );
+      const { data } = await axios.get(`/comments?detailId=${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -30,10 +28,10 @@ export const __getCommnetsByTodoId = createAsyncThunk(
 
 export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
-  async (arg, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/comments/${arg}`);
-      return thunkAPI.fulfillWithValue(arg);
+      await axios.delete(`/comments/${payload}`);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -42,10 +40,10 @@ export const __deleteComment = createAsyncThunk(
 
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
-  async (arg, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      axios.patch(`http://localhost:3001/comments/${arg.id}`, arg);
-      return thunkAPI.fulfillWithValue(arg);
+      axios.patch(`/comments/${payload.id}`, payload);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -54,9 +52,9 @@ export const __updateComment = createAsyncThunk(
 
 export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
-  async (arg, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/comments`, arg);
+      const { data } = await axios.post(`/comments`, payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);

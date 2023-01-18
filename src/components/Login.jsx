@@ -44,9 +44,19 @@ const Login = (props) => {
 
   return (
     <ModalContentWrap>
-      <form>
-        <div>
-          <h2> LOGIN</h2>
+      <form
+      // onSubmit={(e) => {
+      //   e.preventDefault();
+      //   // if (
+      //   //   login.loginID.trim() === "" ||
+      //   //   login.loginPW.trim() === "" ||
+      //   // ) {
+      //   //   return alert("모든 항목 입력해주세요");
+      //   // }
+      // }}
+      >
+        <h2> LOGIN</h2>
+        <StContainer>
           <LoginInputContainer>
             <LoginInput
               type="text"
@@ -63,10 +73,10 @@ const Login = (props) => {
             />
           </LoginInputContainer>
           <LoginButtonContainer>
-            <MainButton onClick={onSubmitLogin}> 로그인하기</MainButton>
-            <MainButton onClick={props.setModalIsOpen}>취소하기</MainButton>
+            <MainButton onClick={onSubmitLogin}> 로그인</MainButton>
+            <MainButton onClick={props.setModalIsOpen}>취소</MainButton>
           </LoginButtonContainer>
-        </div>
+        </StContainer>
       </form>
     </ModalContentWrap>
   );
@@ -75,8 +85,15 @@ const Login = (props) => {
 export default Login;
 
 const ModalContentWrap = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   margin: 0 auto;
+  padding: 10px;
+`;
+
+const StContainer = styled.div`
+  /* border: 1px solid blue; */
+  background-color: white;
 `;
 
 const LoginInput = styled.input`

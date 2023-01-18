@@ -165,22 +165,42 @@ const SignUp = () => {
 
 export default SignUp;
 const SignUpLayout = styled.div`
+  margin-top: 5%;
+  width: 900px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-image: linear-gradient(
+    to top,
+    #bdc2e8 0%,
+    #bdc2e8 1%,
+    #e6dee9 100%
+  );
 `;
-const SingUpForm = styled.form`
+
+const StSignBack = styled.div`
+  display: flex;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+`;
+
+const SingUpForm = styled.form``;
+
+const SingUpBox = styled.div`
   font-weight: bold;
   font-size: 20px;
-  border: 2px solid black;
-  border-radius: 15px;
-  padding: 25px 5px;
+  padding: 25px;
+  margin: 20px;
   width: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  gap: 20px;
 `;
 
 const SignUpHeader = styled.div`
   font-weight: bolder;
   font-size: 40px;
+  margin: 15px;
 `;
 
 const SignUpInput = styled.input`
@@ -191,7 +211,7 @@ const SignUpInput = styled.input`
 `;
 const SingUpPasswordInput = styled.input`
   /* font-size: 20px; */
-  height: 30px;
+  height: 40px;
   width: 400px;
   padding: 10px;
   border-radius: 10px;
@@ -226,4 +246,11 @@ const InputBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const MainImage = styled.img`
+  margin-top: 5%;
+  width: 300px;
+  height: 360px;
+  margin: 60px 25px 0 0;
 `;

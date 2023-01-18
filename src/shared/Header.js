@@ -25,14 +25,14 @@ const Header = () => {
       <Stcontainer>
         <Sthead>
           <Sthome>
-            <FaRocket onClick={goToHome} size="70" />
+            <FaRocket onClick={goToHome} size="60" />
           </Sthome>
           <Stlogo>
             <Logo />
           </Stlogo>
           <StBack onClick={goToback}>
-            <SlArrowLeft size="50" />
-            <div>뒤로가기</div>
+            <SlArrowLeft size="25" />
+            <StSpan>뒤로가기</StSpan>
           </StBack>
         </Sthead>
       </Stcontainer>
@@ -45,37 +45,38 @@ export default Header;
 const Stcontainer = styled.div`
   /* border: 2px solid red; */
   width: 100%;
+  height: auto;
   margin: 0 auto;
 `;
 
 const Stlogo = styled.div`
   /* border: 1px solid blue; */
-  width: 20%;
-  display: flex;
-  justify-content: center;
+  margin-left: 20px;
 `;
 
 const Sthead = styled.div`
   /* border: 1px solid; */
-  padding: 10px;
-  margin: 10px;
+  margin: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   cursor: pointer;
 `;
 
 const Sthome = styled.div`
   /* border: 1px solid; */
+  margin-top: 10px;
 `;
 
 const StBack = styled.div`
   /* border: 1px solid; */
-  font-size: 40px;
-  font-weight: 600;
-  padding: 10px;
-  margin: 10px;
-  gap: 15px;
+  margin-top: 30px;
+  gap: 10px;
   display: flex;
   justify-items: center;
   cursor: pointer;
+`;
+
+const StSpan = styled.span`
+  font-size: 20px;
+  font-weight: 600;
 `;

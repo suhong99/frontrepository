@@ -18,10 +18,10 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/List" element={<List />} />
           <Route path="/Post" element={<Post />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/Detail" element={<Detail />} />
+          <Route path="/List" element={<List />} />
+          <Route path="/List/:id" element={<Detail />} />
         </Routes>
       </Layout>
     </BrowserRouter>
