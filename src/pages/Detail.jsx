@@ -118,14 +118,15 @@ const Detail = ({ list }) => {
               </StinputBox>
             </StWrap>
           </StMain>
+          <StIconWrap>
+            {like ? (
+              <BsSuitHeart onClick={likeClick} />
+            ) : (
+              <BsSuitHeartFill onClick={likeClick} color="red" />
+            )}
+            <span>0</span>
+          </StIconWrap>
         </Stwrap>
-        <StIconWrap>
-          {like ? (
-            <BsSuitHeart onClick={likeClick} />
-          ) : (
-            <BsSuitHeartFill onClick={likeClick} color="red" />
-          )}
-        </StIconWrap>
       </StContainer>
     </>
   );
@@ -136,12 +137,15 @@ export default Detail;
 const StContainer = styled.div`
   width: 100vh;
   height: 100vh;
-`;
-
-const Stwrap = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Stwrap = styled.div`
+  width: 700px;
+  height: 700px;
 `;
 
 const StMain = styled.div`
@@ -244,9 +248,6 @@ const StIconWrap = styled.div`
   font-size: 30px;
   font-weight: 500;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
   width: 400px;
-  gap: 10px;
-  margin: 10px;
+  margin: 20px 0 0 50px;
 `;

@@ -45,61 +45,60 @@ const Post = () => {
 
   return (
     <>
-      <Layout>
-        <StContainer>
-          <StForm
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (
-                post.content.trim() === "" ||
-                post.title.trim() === "" ||
-                post.answer.trim() === ""
-              ) {
-                return alert("모든 항목 입력해주세요");
-              }
+      <StContainer>
+        <StForm
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (
+              post.content.trim() === "" ||
+              post.title.trim() === "" ||
+              post.answer.trim() === ""
+            ) {
+              return alert("모든 항목 입력해주세요");
+            }
 
-              dispatch(__addPost(post));
-              navigate("/List");
-            }}
-          >
-            <StTitle>문제를 만들어봅시다.</StTitle>
-            <StMain>
-              <StinputBox>
-                <StInput
-                  type="text"
-                  placeholder="제목을 적어주세요."
-                  name={"title"}
-                  value={post.title}
-                  onChange={onChangeHandler}
-                />
-              </StinputBox>
-              <StinputBox>
-                <Textarea
-                  name={"content"}
-                  rows="12"
-                  onChange={onChangeHandler}
-                  placeholder="내용을 적어주세요."
-                  value={post.content}
-                />
-              </StinputBox>
-              <StinputBox>
-                <StInput
-                  type="text"
-                  onChange={onChangeHandler}
-                  placeholder="답을 적어주세요."
-                  value={post.answer}
-                  name={"answer"}
-                />
-              </StinputBox>
+            dispatch(__addPost(post));
+            navigate("/List");
+          }}
+        >
+          <StTitle>문제를 만들어봅시다.</StTitle>
 
-              <Stbuttonwrap>
-                <Stbutton type="submit">작성하기</Stbutton>
-                <Stbutton type="submit">취소하기</Stbutton>
-              </Stbuttonwrap>
-            </StMain>
-          </StForm>
-        </StContainer>
-      </Layout>
+          <StMain>
+            <StinputBox>
+              <StInput
+                type="text"
+                placeholder="제목을 적어주세요."
+                name={"title"}
+                value={post.title}
+                onChange={onChangeHandler}
+              />
+            </StinputBox>
+            <StinputBox>
+              <Textarea
+                name={"content"}
+                rows="12"
+                onChange={onChangeHandler}
+                placeholder="내용을 적어주세요."
+                value={post.content}
+              />
+            </StinputBox>
+            <StinputBox>
+              <StInput
+                type="text"
+                onChange={onChangeHandler}
+                placeholder="답을 적어주세요."
+                value={post.answer}
+                name={"answer"}
+              />
+            </StinputBox>
+
+            <Stbuttonwrap>
+              <Stbutton type="submit">작성하기</Stbutton>
+              <Stbutton type="submit">취소하기</Stbutton>
+            </Stbuttonwrap>
+          </StMain>
+        </StForm>
+      </StContainer>
     </>
   );
 };
@@ -107,19 +106,21 @@ const Post = () => {
 export default Post;
 
 const StForm = styled.form`
-  width: 100vh;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 const StContainer = styled.div`
+  width: 100vh;
+  height: 100vh;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StTitle = styled.div`
-  /* border: 5px solid gray; */
   border-radius: 20px 20px 0 0;
   width: 700px;
   padding: 15px;
@@ -143,7 +144,6 @@ const StinputBox = styled.div`
 `;
 
 const StMain = styled.div`
-  /* border: 5px solid gray; */
   border-radius: 0 0 20px 20px;
   width: 700px;
   height: 700px;
@@ -159,7 +159,6 @@ const StMain = styled.div`
     #bdc2e8 1%,
     #e6dee9 100%
   );
-  box-sizing: inherit;
 `;
 
 const StInput = styled.input`
@@ -184,7 +183,6 @@ const Textarea = styled.textarea`
 `;
 
 const Stbuttonwrap = styled.div`
-  /* border: 2px solid; */
   display: flex;
   flex-direction: row;
   justify-content: center;
