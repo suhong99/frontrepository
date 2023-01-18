@@ -9,21 +9,21 @@ const Card = ({ post }) => {
   return (
     <>
       <StContainer>
-        <Stcard onClick={() => navigate(`/List/${post.id}`)}>
+        <Stcard onClick={() => navigate(`/List/${post.qId}`)}>
           <Stcardinner>
             <Sttop>
               <div>
                 <BiPlanet />
-                {post.id}
+                {post.qId}
               </div>
             </Sttop>
             <Stmain>{post.title}</Stmain>
             {/* 클릭하면 디테일페이지로 */}
             <Stfooter>
-              <Stuser>작성자</Stuser>
+              <Stuser>{post.nickname}</Stuser>
               <StIcon>
                 <BiHeart />
-                <span>0</span>
+                <span>{post.like}</span>
               </StIcon>
             </Stfooter>
           </Stcardinner>
