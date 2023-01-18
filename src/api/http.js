@@ -1,6 +1,7 @@
 import axios from "axios";
 const http = axios.create({
   baseURL: "http://f1rstweb.shop",
+  // baseURL: "http://localhost:3001",
   timeout: 10000,
   headers: {
     "content-type": "application/json;charset=UTF-8",

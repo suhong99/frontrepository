@@ -13,7 +13,7 @@ export const __getPost = createAsyncThunk(
   "GET_POST",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await http.get("/list");
+      const { data } = await http.get("/quiz");
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -26,7 +26,7 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-      const { data } = await http.post("/list", payload);
+      const { data } = await http.post("/quiz", payload);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

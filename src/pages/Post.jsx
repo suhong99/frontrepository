@@ -109,22 +109,20 @@ export default Post;
 const StForm = styled.form`
   width: 100vh;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StContainer = styled.div`
-  /* border: 4px solid red; */
-  /* height: 10; */
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 `;
 
 const StTitle = styled.div`
   /* border: 5px solid gray; */
   border-radius: 20px 20px 0 0;
   width: 700px;
-  padding: 10px;
+  padding: 15px;
   margin: 10px 0 0 10px;
   background-image: linear-gradient(
     to top,
@@ -149,8 +147,8 @@ const StMain = styled.div`
   border-radius: 0 0 20px 20px;
   width: 700px;
   height: 700px;
-  padding: 10px;
-  margin: 0 10px;
+  padding: 15px;
+  /* margin: 0 10px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -161,6 +159,7 @@ const StMain = styled.div`
     #bdc2e8 1%,
     #e6dee9 100%
   );
+  box-sizing: inherit;
 `;
 
 const StInput = styled.input`

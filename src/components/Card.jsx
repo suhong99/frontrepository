@@ -9,21 +9,21 @@ const Card = ({ post }) => {
   return (
     <>
       <StContainer>
-        <Stcard onClick={() => navigate(`/List/${post.id}`)}>
+        <Stcard onClick={() => navigate(`/List/${post.qId}`)}>
           <Stcardinner>
             <Sttop>
               <div>
                 <BiPlanet />
-                {post.id}
+                {post.qId}
               </div>
             </Sttop>
             <Stmain>{post.title}</Stmain>
             {/* 클릭하면 디테일페이지로 */}
             <Stfooter>
-              <Stuser>작성자</Stuser>
+              <Stuser>{post.nickname}</Stuser>
               <StIcon>
                 <BiHeart />
-                <span>0</span>
+                {/* <span>{post.like}<span> */}
               </StIcon>
             </Stfooter>
           </Stcardinner>
@@ -40,10 +40,11 @@ const StContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-start;
   flex-wrap: wrap;
   padding: 5%;
   gap: 10px;
+  display: flex;
+  align-items: center;
 `;
 
 const Stcard = styled.div`
@@ -86,6 +87,11 @@ const Stmain = styled.div`
   margin-top: 10px;
   padding: 5%;
   color: white;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 `;
 
 const Stfooter = styled.div`
@@ -110,4 +116,9 @@ const Stuser = styled.div`
   font-size: 15px;
   font-weight: 600;
   text-align: center;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 `;
