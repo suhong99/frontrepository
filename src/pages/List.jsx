@@ -25,7 +25,7 @@ const List = () => {
       {/* <Slide /> */}
       <StListContainer>
         {list.map((post) => (
-          <Card key={post.id} post={post} />
+          <Card key={post.qId} post={post} />
         ))}
       </StListContainer>
     </>

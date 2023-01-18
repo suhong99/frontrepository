@@ -40,7 +40,7 @@ export const __deletePost = createAsyncThunk(
   "DELETE_POST",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await http.delete(`/list/${payload}`);
+      const { data } = await http.delete(`/quiz/${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
