@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsSuitHeartFill, BsFillChatFill } from "react-icons/bs";
+import { RiEdit2Fill, RiDeleteBin5Fill } from "react-icons/ri";
 import Comments from "../components/comments/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -55,6 +56,10 @@ const Detail = () => {
         <StTitle>문제를 풀어봅시다.</StTitle>
         <StMain>
           <StWrap>
+            <StIcon>
+              <RiEdit2Fill color="white" size={35} />
+              <RiDeleteBin5Fill color="white" size={35} />
+            </StIcon>
             <StinputBox>
               <StBox boxHeight="50px">{detail?.title}</StBox>
               <StBox boxHeight="200px">{detail?.content}</StBox>
@@ -65,7 +70,6 @@ const Detail = () => {
             </StinputBox>
           </StWrap>
         </StMain>
-
         <StIcon>
           <BsSuitHeartFill />
           <BsSuitHeartFill color="red" />
@@ -74,8 +78,7 @@ const Detail = () => {
           <BsFillChatFill color="gray" />
           <BsFillChatFill color="#3e405e" />
         </StIcon>
-
-        {/* <Comments /> */}
+        {/* <Comments />ㄴ */}ㄴ
       </StContainer>
     </>
   );
@@ -92,7 +95,7 @@ const StMain = styled.div`
   box-sizing: border-box;
   border-radius: 0 0 20px 20px;
   width: 700px;
-  height: 500px;
+  height: 550px;
   padding: 10px;
   margin: 0 10px;
   display: flex;
@@ -140,7 +143,7 @@ const StBox = styled.div`
   outline: none;
   padding: 12px;
   font-size: 20px;
-  margin: 30px;
+  margin: 7px 30px;
 `;
 
 const StInputWrap = styled.div`

@@ -4,9 +4,9 @@ import axios from "axios";
 
 export const __getComment = createAsyncThunk(
   "GET_COMMENT",
-  async (arg, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/comments/${arg}`);
+      const { data } = await axios.get(`/comments/${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -19,7 +19,7 @@ const initialState = {
     content: "",
     username: "",
     id: 0,
-    todoId: 0,
+    postId: 0,
   },
   isLoading: false,
   error: null,

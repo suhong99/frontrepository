@@ -13,7 +13,7 @@ export const __getPostDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       // console.log(payload);
-      const { data } = await axios.get(`http://localhost:3001/list/${payload}`);
+      const { data } = await axios.get(`/list/${payload}`);
       // console.log("데이터", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -26,8 +26,20 @@ export const __updatePostDetail = createAsyncThunk(
   "UPDATE_POST_DETAIL",
   async (payload, thunkAPI) => {
     try {
-      await axios.patch("http://localhost:3001/list", payload);
+      await axios.patch("/list", payload);
       return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __deletePostDetail = createAsyncThunk(
+  "DELETE_POST_DETAIL",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await delete `/list/${payload}`;
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -64,6 +76,15 @@ const detailSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__deletePostDetail.fulfilled]: (state, action) => {
+      const target = state.records.findIndex(
+        (comment) => comment.id === action.payload
+      );
+
+      state.records.splice(target, 1);
+    },
+    [__deletePostDetail.rejected]: () => {},
+    [__deletePostDetail.pending]: () => {},
   },
 });
 
