@@ -21,14 +21,15 @@ const SignUp = () => {
           <SingUpPasswordInput placeholder="Password를 확인해주세요" />
         </PasswordBox>
       </SingUpBox>
-      <StSignBack>이미지</StSignBack>
+      <StSignBack>
+        <MainImage alt="sign" src="signup.png" />
+      </StSignBack>
     </SignUpLayout>
   );
 };
 
 export default SignUp;
 const SignUpLayout = styled.div`
-  /* border: 4px solid blue; */
   margin-top: 5%;
   width: 900px;
   display: flex;
@@ -41,13 +42,13 @@ const SignUpLayout = styled.div`
 `;
 
 const StSignBack = styled.div`
-  border: 2px solid red;
   display: flex;
   width: 500px;
+  display: flex;
+  justify-content: center;
 `;
 
 const SingUpBox = styled.div`
-  /* border: 2px solid red; */
   font-weight: bold;
   font-size: 20px;
   padding: 25px;
@@ -101,4 +102,11 @@ const InputBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const MainImage = styled.img`
+  margin-top: 5%;
+  width: 300px;
+  height: 360px;
+  margin: 60px 25px 0 0;
 `;
