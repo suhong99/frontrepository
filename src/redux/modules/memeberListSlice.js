@@ -9,9 +9,9 @@ const initialState = {
       password: "",
     },
   ],
+  isLogin: false,
   isLoading: false,
   error: null,
-  isLogin: false,
 };
 
 //회원가입 POST요청
@@ -22,6 +22,45 @@ export const __postMember = createAsyncThunk(
       const { data } = await http.post("/members/join", payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log(error);
+      if (error.response.status === 409) {
+        alert("작성 조건을 지켜주세요.");
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+//아이디 중복확인
+export const __checkMemberId = createAsyncThunk(
+  "CHECK_MEMBERID",
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    try {
+      const { data } = await http.post("/members/join/check/Id", {
+        memberId: payload,
+      });
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      if (error.response.status === 409) {
+        alert("이미 존재하는 아이디입니다.");
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const __checkMemberNick = createAsyncThunk(
+  "CHECK_MEMBERNICK",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await http.post("/members/join/check/nickname", {
+        nickname: payload,
+      });
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      if (error.response.status === 409) {
+        alert("이미 존재하는 닉네임입니다.");
+      }
+
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -32,19 +71,20 @@ export const __postLogin = createAsyncThunk(
   "POST_LOGIN",
   async (payload, thunkAPI) => {
     try {
-      // console.log(payload);
-      const { data } = await http
-        .post("/members/login", payload)
-        .then((res) => {
-          // console.log(res.data.accessToken);
-          sessionStorage.setItem("accessToken", res.data.accessToken);
-          sessionStorage.setItem("refreshToken", res.data.refreshToken); //수정 해야할 듯
-          return res;
-        });
-      console.log(data); // 성공하면 토큰이 찍힘
-
-      return thunkAPI.fulfillWithValue(data);
+      const data = await http.post("/members/login", payload).then((res) => {
+        console.log(res.headers.authorization);
+        sessionStorage.setItem("authorization", res.headers.authorization);
+        // sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        return res;
+      });
+      if (data.status === 200) {
+        alert("로그인 성공");
+      }
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      if (error.response.status === 409) {
+        alert("아이디와 패스워드를 확인해주세요");
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -53,7 +93,14 @@ export const __postLogin = createAsyncThunk(
 const memberListSlice = createSlice({
   name: "memberList",
   initialState,
-  reducers: {},
+  reducers: {
+    checkLogin: (state, action) => {
+      state.isLogin = true;
+    },
+    checkLogout: (state, action) => {
+      state.isLogin = false;
+    },
+  },
   extraReducers: {
     //post
     [__postMember.pending]: (state) => {
@@ -74,13 +121,34 @@ const memberListSlice = createSlice({
       state.isLoading = false;
       state.isLogin = true;
       sessionStorage.setItem("memberinfo", JSON.stringify(action.payload));
-      console.log(action.payload); //
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__checkMemberId.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__checkMemberId.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      alert("중복 확인 되었습니다.");
+    },
+    [__checkMemberId.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__checkMemberNick.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__checkMemberNick.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      alert("중복 확인 되었습니다.");
+    },
+    [__checkMemberNick.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
-
+export const { checkLogin, checkLogout } = memberListSlice.actions;
 export default memberListSlice.reducer;

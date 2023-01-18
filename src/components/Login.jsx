@@ -5,35 +5,41 @@ import { __postLogin } from "../redux/modules/memeberListSlice";
 import { useDispatch } from "react-redux";
 
 const Login = (props) => {
+  console.log(props);
   const dispatch = useDispatch();
 
-  const [member, setMember] = useState({
-    memberId: "",
-    password: "",
-  });
+  // const [member, setMember] = useState({
+  //   memberId: "",
+  //   password: "",
+  // });
   const memberIdInput = useRef();
   const passwordInput = useRef();
-  const { memberId, password } = member;
-  const onChange = (e) => {
-    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setMember({
-      ...member, // 기존의 member 객체를 복사한 뒤
-      [name]: value, // name 키를 가진 값을 value 로 설정
-    });
-  };
+  // const { memberId, password } = member;
+  // const onChange = (e) => {
+  //   const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+  //   setMember({
+  //     ...member, // 기존의 member 객체를 복사한 뒤
+  //     [name]: value, // name 키를 가진 값을 value 로 설정
+  //   });
+  // };
   //전송 후  인풋 창 초기화
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
-    if (member.memberId.trim() === "" || member.password.trim() === "") {
-      alert("체크해주세요");
+    if (memberIdInput.length === 0 && passwordInput.length === 0) {
+      return alert("체크해주세요");
     }
-    dispatch(__postLogin(member));
-    setMember({
-      memberId: "",
-      password: "",
-    });
+    //
+
+    dispatch(
+      __postLogin({
+        memberId: memberIdInput.current.value,
+        password: passwordInput.current.value,
+      })
+    );
+
     memberIdInput.current.focus();
+    props.setModalIsOpen();
   };
 
   return (
@@ -53,21 +59,16 @@ const Login = (props) => {
         <StContainer>
           <LoginInputContainer>
             <LoginInput
-              // type="text"
+              type="text"
               name="memberId"
-              value={memberId}
               ref={memberIdInput}
-              onChange={onChange}
               placeholder="ID를 입력해주세요"
             />
 
             <LoginInput
-              // type="text"
-              type="text"
+              type="password"
               name="password"
-              value={password}
               ref={passwordInput}
-              onChange={onChange}
               placeholder="PW를 입력해주세요"
             />
           </LoginInputContainer>
@@ -96,9 +97,9 @@ const StContainer = styled.div`
 `;
 
 const LoginInput = styled.input`
-  width: 400px;
-  font-size: 20px;
-  height: 40px;
+  /* width: 75vw; //todo : 기능적인 부분 먼저하고 , 반응형값으로 고치기
+  font-size: 3.75vw;
+  height: 7.49vw; */
   padding: 10px;
 `;
 

@@ -1,24 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../components/Logo";
 import MainButton from "../components/MainButton";
 import Modal from "react-modal";
 import Login from "../components/Login";
+import { useDispatch, useSelector } from "react-redux";
+import { checkLogin, checkLogout } from "../redux/modules/memeberListSlice";
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  //todo :로그인 확인 기능 구현해야함 -->LoginHeader
+  // const [loginCheck, setLoginCheck] = useState(false);
+  // const [memberinfo, setMemberinfo] = useState("");
+  //로그인 체크 확인 시 세션스토리지에 저장된 유저정보 불러오기
+  // 유저 정보가 존재한다면, LoginCheck를 true로
+  const loginCheck = useSelector((state) => state.memberList.isLogin);
+  useEffect(() => {
+    const memberinfomation = JSON.parse(sessionStorage.getItem("memberinfo"));
+    // memberinfomation ? dispatch(checkLogin()) : dispatch(checkLogout());
+    if (memberinfomation) {
+      dispatch(checkLogin());
+    }
+
+    // console.log(memberinfomation);
+  }, [dispatch]);
+
   const logOut = () => {
     sessionStorage.clear();
-    window.location.reload();
+    dispatch(checkLogout());
+    // window.location.reload();
   };
   return (
     <MainWrap>
       <MainHead>
         <Logo />
         <ButtonContainer>
-          <MainButton onClick={() => setModalIsOpen(true)}>로그인</MainButton>
+          {loginCheck ? (
+            <MainButton onClick={logOut}>로그아웃</MainButton>
+          ) : (
+            <MainButton onClick={() => setModalIsOpen(true)}>로그인</MainButton>
+          )}
+
           <Modal
             style={{
               content: {
@@ -38,7 +61,10 @@ const Home = () => {
             ariaHideApp={false}
             onRequestClose={() => setModalIsOpen(false)}
           >
-            <Login setModalIsOpen={() => setModalIsOpen(false)} />
+            <Login
+              setModalIsOpen={() => setModalIsOpen(false)}
+              // setModal={setModalIsOpen()}
+            />
           </Modal>
 
           <MainButton onClick={() => navigate("/SignUp")}>회원가입</MainButton>
