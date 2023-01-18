@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { serverUrl } from ".";
+import http from "../../api/http";
 
 const initialState = {
   list: [],
