@@ -1,7 +1,7 @@
 import axios from "axios";
 const http = axios.create({
   baseURL: "http://f1rstweb.shop",
-  timeout: 100000,
+  timeout: 10000,
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",
@@ -10,10 +10,15 @@ const http = axios.create({
   //   Authorization :  ////token 넣음
 });
 
-// http.interceptors.request.use(function (config) {
-//   const accessToken = sessionStorage.getItem("accessToken");
-//   config.headers.common["X-AUTH-TOKEN"] = `${accessToken}`;
-//   return config;
-// });
+http.interceptors.request.use(function (config) {
+  // console.log("들어가나");
+
+  const access_token = sessionStorage.getItem("access_token");
+  if (access_token !== null) {
+    // console.log(access_token);
+    config.headers.common["Authorization"] = `Bearer ${access_token}`;
+  }
+  return config;
+});
 
 export default http;
