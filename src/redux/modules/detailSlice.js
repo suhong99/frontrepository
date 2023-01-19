@@ -40,8 +40,13 @@ export const __updatePostDetail = createAsyncThunk(
   "UPDATE_POST_DETAIL",
   async (payload, thunkAPI) => {
     try {
-      const data = await http.put(`/quiz/${payload.id}`, {
+      console.log({
         title: payload.id,
+        content: payload.content,
+        answer: payload.answer,
+      });
+      const data = await http.put(`/quiz/${payload.id}`, {
+        title: payload.title,
         content: payload.content,
         answer: payload.answer,
       });

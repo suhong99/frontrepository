@@ -85,6 +85,7 @@ const Detail = ({ list }) => {
       })
     );
     setIsEditMode(false);
+    dispatch(__getPostDetail(param.id));
   };
   // 정답 제출
   const onSubmitAnswerHandler = () => {
