@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import http from "../../api/http";
 // import { isDev, serverUrl } from ".";
 
 export const __getCommentsThunk = createAsyncThunk(
   "GET_COMMENTS",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get(`/comments`);
+      const { data } = await http.get(`/comments`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -17,8 +18,10 @@ export const __getCommentsThunk = createAsyncThunk(
 export const __getCommnetsByTodoId = createAsyncThunk(
   "GET_COMMENT_BY_POST_ID",
   async (payload, thunkAPI) => {
+    // console.log(payload);
     try {
-      const { data } = await axios.get(`/comments?detailId=${payload}`);
+      const { data } = await http.get(`/comment/${payload}`);
+      // data 어떻게 오는지 확인하고 뒷 부분 해야함. 현재 401때문에 진행 안됨.
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -30,7 +33,7 @@ export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`/comments/${payload}`);
+      await http.delete(`/comments/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -42,7 +45,7 @@ export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      axios.patch(`/comments/${payload.id}`, payload);
+      http.patch(`/comments/${payload.id}`, payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -54,7 +57,8 @@ export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(`/comments`, payload);
+      console.log(payload);
+      const { data } = await http.post(`/comment`, payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);

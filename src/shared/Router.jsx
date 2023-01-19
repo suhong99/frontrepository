@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp";
 import Layout from "./Layout";
 import Header from "./Header";
 import Detail from "../pages/Detail";
+import Comments from "../components/comments/Comments";
 // import Header from "./Header";
 
 const Router = () => {
@@ -22,6 +23,7 @@ const Router = () => {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/List" element={<List />} />
           <Route path="/List/:id" element={<Detail />} />
+          <Route path="/Comments/:id" element={<Comments />} />
         </Routes>
       </Layout>
     </BrowserRouter>

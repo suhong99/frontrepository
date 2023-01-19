@@ -2,27 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { __addComment } from "../redux/modules/commentsSlice";
-
+import { __addComment } from "../../redux/modules/commentsSlice";
 const AddCommentForm = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const [comment, setComment] = useState({
-    username: "",
-    content: "",
+    comment: "",
   });
-  // console.log(comment);
+  console.log(comment);
 
   const onAddCommentButtonHandler = (event) => {
     event.preventDefault();
-    if (comment.content.trim() === "" || comment.username.trim() === "") {
+    if (comment.comment.trim() === "") {
       return alert("모든 항목을 입력해주세요.");
     }
-    dispatch(__addComment({ recordId: id, ...comment }));
+    dispatch(__addComment(comment));
     setComment({
-      username: "",
-      content: "",
+      comment: "",
     });
   };
 
@@ -36,20 +33,10 @@ const AddCommentForm = () => {
 
   return (
     <StForm onSubmit={onAddCommentButtonHandler}>
-      <StNameInput>
-        <input
-          placeholder="이름 (5자 이내)"
-          value={comment.username}
-          type="text"
-          name="username"
-          onChange={onChangeInputHandler}
-          maxLength={5}
-        />
-      </StNameInput>
       <input
         placeholder="댓글을 추가하세요. (100자 이내)"
         value={comment.content}
-        name="content"
+        name="comment"
         type="text"
         onChange={onChangeInputHandler}
         maxLength={100}
