@@ -14,9 +14,6 @@ const http = axios.create({
 http.interceptors.request.use(function (config) {
   // console.log("들어가나");
   const access_token = sessionStorage.getItem("authorization");
-
-  // const access_token = sessionStorage.getItem("access_token");
-  // console.log(access_token);
   if (access_token !== null) {
     // console.log(access_token);
     // config.headers.common["Authorization"] = `${access_token}`;

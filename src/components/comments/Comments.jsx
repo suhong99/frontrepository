@@ -9,25 +9,14 @@ import AddCommentForm from "./AddCommentForm";
 const Comments = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [isShow, setisShow] = useState(false);
   const { data } = useSelector((state) => state.comments.commentsByTodoId);
   console.log(data);
   useEffect(() => {
-    if (isShow) {
-      dispatch(__getCommnetsByTodoId(id));
-    }
-  }, [dispatch, id, isShow]);
+    dispatch(__getCommnetsByTodoId(id));
+  }, [dispatch, id]);
 
   return (
-    <StContainer isShow={isShow}>
-      <StToggleContainer
-        onClick={() => {
-          setisShow((pre) => !pre);
-        }}
-      >
-        {/* 아이콘들어가야함 */}
-        <div>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</div>
-      </StToggleContainer>
+    <StContainer>
       <AddCommentForm />
       <StCommentList>
         {/* {data?.map((comment) => (
@@ -41,13 +30,8 @@ const Comments = () => {
 export default Comments;
 
 const StContainer = styled.div`
-  height: ${({ isShow }) => (isShow ? "400px" : "50px")};
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
   width: 100%;
   background-color: #fff;
-  transition: height 400ms ease-in-out;
 `;
 
 const StToggleContainer = styled.div`
