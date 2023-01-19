@@ -10,8 +10,10 @@ const Comments = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.comments.commentsByTodoId);
-  console.log(data);
+  // console.log(data);
+  // console.log(data.allComments);
   useEffect(() => {
+    console.log(id);
     dispatch(__getCommnetsByTodoId(id));
   }, [dispatch, id]);
 
@@ -19,9 +21,9 @@ const Comments = () => {
     <StContainer>
       <AddCommentForm />
       <StCommentList>
-        {/* {data?.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
-        ))} */}
+        {data.allComments?.map((comment) => (
+          <Comment key={comment?.cId} comment={comment} />
+        ))}
       </StCommentList>
     </StContainer>
   );
@@ -43,4 +45,5 @@ const StToggleContainer = styled.div`
 const StCommentList = styled.div`
   height: 350px;
   overflow: scroll;
+  margin-bottom: 20px;
 `;
