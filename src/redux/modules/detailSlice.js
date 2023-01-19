@@ -40,7 +40,15 @@ export const __updatePostDetail = createAsyncThunk(
   "UPDATE_POST_DETAIL",
   async (payload, thunkAPI) => {
     try {
-      await http.patch("/list", payload);
+      const data = await http.put(`/quiz/${payload.id}`, {
+        title: payload.id,
+        content: payload.content,
+        answer: payload.answer,
+      });
+      if (data.status === 201) {
+        alert("수정되었습니다.");
+      }
+
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

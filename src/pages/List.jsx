@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Card from "../components/Card";
 import { __getPost } from "../redux/modules/postSlice";
-import Detail from "./Detail";
-import { useNavigate } from "react-router-dom";
+// import Detail from "./Detail";
+// import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const List = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { list } = useSelector((state) => state.post);
   // console.log("리스트", list);
