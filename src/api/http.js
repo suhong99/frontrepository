@@ -1,6 +1,6 @@
 import axios from "axios";
 const http = axios.create({
-  baseURL: "http://f1rstweb.shop",
+  baseURL: "https://f1rstweb.shop",
   // baseURL: "http://localhost:3001",
   timeout: 10000,
   headers: {
@@ -16,7 +16,7 @@ http.interceptors.request.use(function (config) {
   const access_token = sessionStorage.getItem("authorization");
 
   // const access_token = sessionStorage.getItem("access_token");
-  console.log(access_token);
+  // console.log(access_token);
   if (access_token !== null) {
     // console.log(access_token);
     // config.headers.common["Authorization"] = `${access_token}`;
