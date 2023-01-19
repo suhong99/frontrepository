@@ -5,7 +5,7 @@ import { __postLogin } from "../redux/modules/memeberListSlice";
 import { useDispatch } from "react-redux";
 
 const Login = (props) => {
-  console.log(props);
+  // console.log(props);
   const dispatch = useDispatch();
 
   // const [member, setMember] = useState({
@@ -26,7 +26,10 @@ const Login = (props) => {
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
-    if (memberIdInput.length === 0 && passwordInput.length === 0) {
+    if (
+      memberIdInput.current.value.trim() === "" ||
+      passwordInput.current.value.trim() === ""
+    ) {
       return alert("체크해주세요");
     }
     //
@@ -44,17 +47,7 @@ const Login = (props) => {
 
   return (
     <ModalContentWrap>
-      <form
-      // onSubmit={(e) => {
-      //   e.preventDefault();
-      //   // if (
-      //   //   login.loginID.trim() === "" ||
-      //   //   login.loginPW.trim() === "" ||
-      //   // ) {
-      //   //   return alert("모든 항목 입력해주세요");
-      //   // }
-      // }}
-      >
+      <form>
         <h2> LOGIN</h2>
         <StContainer>
           <LoginInputContainer>

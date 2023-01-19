@@ -14,7 +14,7 @@ export const __getPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await http.get("/quiz");
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -25,12 +25,21 @@ export const __getPost = createAsyncThunk(
 export const __addPost = createAsyncThunk(
   "ADD_POST",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
+    // console.log("payload", payload);
     try {
-      const { data } = await http.post("/quiz", payload);
+      const data = await http.post("/quiz", payload);
       console.log("data", data);
+      if (data.status === 201) {
+        alert("작성되었습니다.");
+      }
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      if (error.response.status === 400) {
+        alert("이딴게 프론트?");
+      }
+      if (error.response.status === 401) {
+        alert("다시 로그인 해주세요");
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }

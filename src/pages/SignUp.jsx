@@ -221,10 +221,10 @@ const SingUpPasswordInput = styled.input`
   margin: auto;
 `;
 
-const SignUpWords = styled.div`
-  margin: 5px;
-  margin-left: 40px;
-`;
+// const SignUpWords = styled.div`
+//   margin: 5px;
+//   margin-left: 40px;
+// `;
 
 const HelperText = styled.pre`
   /* margin: auto; */

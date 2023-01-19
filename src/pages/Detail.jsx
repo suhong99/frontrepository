@@ -17,22 +17,12 @@ import {
   __deletePostDetail,
 } from "../redux/modules/detailSlice";
 import { clearPost } from "../redux/modules/postSlice";
-
-//디테일페이지
-//1. 제목과 내용에 post 에서 보내주는 id,title,content 가 들어가고
-
-//2. 자기가 쓴 글에서 수정하기 보이기
-
-//3. 제출하기를 누르면 답이면 정답입니다 팝업
-//4. 제출하기를 누르면 오답이면 오답입니다 팝업 하고 다시 답 맞추기로 커서
-
-//5. 하트 아이콘 누르면 좋아요 조회수 올라가고->API 명세서 참고
-
-//6. 댓글 아이콘 누르면 댓글창 보이고 댓글확인
-
+import { __submitAnswer } from "../redux/modules/detailSlice";
+import { useRef } from "react";
 const Detail = ({ list }) => {
   const dispatch = useDispatch();
   const param = useParams();
+  // console.log(param);
   const navigate = useNavigate();
 
   //좋아요
@@ -50,7 +40,7 @@ const Detail = ({ list }) => {
   const [updatedDtail, setUpdatedDetail] = useState("");
 
   const detail = useSelector((state) => state.detail.list);
-
+  // console.log(detail);
   useEffect(() => {
     dispatch(__getPostDetail(param.id));
     return () => dispatch(clearPost());
@@ -60,8 +50,10 @@ const Detail = ({ list }) => {
     setUpdatedDetail(detail.content);
   }, [detail]);
 
+  // 정답 제거하기
   const onDeleteHandler = () => {
-    dispatch(__deletePostDetail(list.qid));
+    dispatch(__deletePostDetail(param.id));
+    navigate(-1);
   };
 
   const onEditdableHandler = async (list) => {
@@ -71,7 +63,18 @@ const Detail = ({ list }) => {
     dispatch(__updatePostDetail({ ...detail, content: updatedDtail }));
     setIsEditMode(false);
   };
+  // 정답 제출
+  const onSubmitAnswerHandler = () => {
+    dispatch(__submitAnswer({ ...param, answer: answerInput.current.value }));
+  };
 
+  // console.log(detail.nickname);
+  // console.log(sessionStorage.getItem("memberinfo"));
+  const whoAmI = JSON.parse(sessionStorage.getItem("memberinfo"));
+  // console.log(whoAmI);
+  // console.log(detail.nickname, whoAmI.nickname);
+  const answerInput = useRef();
+  // console.log(answerInput);
   return (
     <>
       <StContainer>
@@ -79,41 +82,49 @@ const Detail = ({ list }) => {
           <StTitle>문제를 풀어봅시다.</StTitle>
           <StMain>
             <StWrap>
-              <StIcon>
-                <RiEdit2Fill
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    const result = window.confirm("수정하쉴?");
-                    if (result) {
-                      return onEditdableHandler;
-                    } else {
-                      return;
-                    }
-                  }}
-                  color="white"
-                  size={35}
-                />
+              {whoAmI?.nickname === detail.nickname ? (
+                <StIcon>
+                  <RiEdit2Fill
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      const result = window.confirm("수정하쉴?");
+                      if (result) {
+                        return onEditdableHandler;
+                      } else {
+                        return;
+                      }
+                    }}
+                    color="white"
+                    size={35}
+                  />
 
-                <RiDeleteBin5Fill
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    const result = window.confirm("정말 지울까요?");
-                    if (result) {
-                      return onDeleteHandler();
-                    } else {
-                      return;
-                    }
-                  }}
-                  color="white"
-                  size={35}
-                />
-              </StIcon>
+                  <RiDeleteBin5Fill
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      const result = window.confirm("정말 지울까요?");
+                      if (result) {
+                        return onDeleteHandler(), navigate("/List");
+                      } else {
+                        return;
+                      }
+                    }}
+                    color="white"
+                    size={35}
+                  />
+                </StIcon>
+              ) : null}
+
               <StinputBox>
-                <StBox boxHeight="50px">{list?.title}</StBox>
-                <StBox boxHeight="300px">{list?.content}</StBox>
+                <StBox boxHeight="50px">{detail?.title}</StBox>
+                <StBox boxHeight="300px">{detail?.content}</StBox>
                 <StInputWrap>
-                  <StInput placeholder="답제출하는 곳" />
-                  <StButton>작성하기</StButton>
+                  <StInput
+                    type="text"
+                    name="answer"
+                    ref={answerInput}
+                    placeholder="답제출하는 곳"
+                  />
+                  <StButton onClick={onSubmitAnswerHandler}>작성하기</StButton>
                 </StInputWrap>
               </StinputBox>
             </StWrap>
@@ -124,7 +135,7 @@ const Detail = ({ list }) => {
             ) : (
               <BsSuitHeartFill onClick={likeClick} color="red" />
             )}
-            <span>0</span>
+            <span>{detail.like}</span>
           </StIconWrap>
         </Stwrap>
       </StContainer>
