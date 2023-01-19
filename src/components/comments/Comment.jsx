@@ -19,42 +19,17 @@ const Comment = ({ comment }) => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [updatedComment, setUpdatedComment] = useState("");
-
+  // console.log(comment);
   const { content } = useSelector((state) => state.comment.data);
   const { isGlobalEditmode } = useSelector((state) => state.comment);
 
   const onDeleteButtonHandler = () => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      dispatch(__deleteComment(comment.id));
+      dispatch(__deleteComment(comment.cId));
     } else {
       return;
     }
-  };
-
-  const onUpdateButtonHandler = () => {
-    dispatch(
-      __updateComment({
-        id: comment.id,
-        content: updatedComment,
-        username: comment.username,
-        todoId: id,
-      })
-    );
-    setIsEdit(false);
-    dispatch(globalEditModeToggle(false));
-  };
-
-  const onChangeEditButtonHandler = () => {
-    setIsEdit(true);
-    dispatch(__getComment(comment.id));
-    dispatch(globalEditModeToggle(true));
-  };
-
-  const onCancelButtonHandler = () => {
-    setIsEdit(false);
-    dispatch(clearComment());
-    dispatch(globalEditModeToggle(false));
   };
 
   useEffect(() => {
@@ -79,14 +54,14 @@ const Comment = ({ comment }) => {
             <button
               size="small"
               bgColor="#FE531F"
-              onClick={onCancelButtonHandler}
+              // onClick={onCancelButtonHandler}
             >
               <div>취소</div>
             </button>
             <button
               size="small"
               bgColor="#FE531F"
-              onClick={onUpdateButtonHandler}
+              // onClick={onUpdateButtonHandler}
             >
               <div>저장</div>
             </button>
@@ -95,24 +70,24 @@ const Comment = ({ comment }) => {
       ) : (
         <>
           <StInputWrapper>
-            {/* <div>{comment.username}</div>
-            <div>{comment.content}</div> */}
+            <div>{comment.nickname}</div>
+            <div>{comment.comment}</div>
           </StInputWrapper>
 
           <StControlGroup>
             <button
               size="small"
-              bgColor="#FE531F"
-              disabled={isGlobalEditmode}
-              onClick={onChangeEditButtonHandler}
+              bgcolor="#FE531F"
+              // disabled={isGlobalEditmode}
+              // onClick={onChangeEditButtonHandler}
             >
               <VscEdit size="16" color="#fff" />
             </button>
             <button
               size="small"
-              bgColor="#FE531F"
+              bgcolor="#FE531F"
               onClick={onDeleteButtonHandler}
-              disabled={isGlobalEditmode}
+              // disabled={isGlobalEditmode}
             >
               <VscTrash size="16" color="#fff" />
             </button>
@@ -127,8 +102,8 @@ export default Comment;
 
 const StComment = styled.div`
   border-bottom: 1px solid #eee;
-  height: 70px;
   padding: 0 12px;
+  /* overflow: scroll; */
 `;
 
 const StControlGroup = styled.div`

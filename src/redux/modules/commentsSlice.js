@@ -17,10 +17,11 @@ export const __getCommentsThunk = createAsyncThunk(
 export const __getCommnetsByTodoId = createAsyncThunk(
   "GET_COMMENT_BY_POST_ID",
   async (payload, thunkAPI) => {
-    // console.log(payload);
+    console.log(payload);
     try {
       const { data } = await http.get(`/comment/${payload}`);
       // data 어떻게 오는지 확인하고 뒷 부분 해야함. 현재 401때문에 진행 안됨.
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -32,9 +33,15 @@ export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      await http.delete(`/comments/${payload}`);
+      const data = await http.delete(`/comment/${payload}`);
+      if (data.status === 204) {
+        alert("댓글이 삭제되었습니다.");
+      }
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
+      if (e.response.status === 400) {
+        alert("삭제에 실패했습니다.");
+      }
       return thunkAPI.rejectWithValue(e.code);
     }
   }
@@ -158,7 +165,6 @@ export const commentsSlice = createSlice({
     },
     [__addComment.fulfilled]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
-      state.commentsByTodoId.data.push(action.payload);
     },
     [__addComment.rejected]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
