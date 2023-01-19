@@ -23,7 +23,7 @@ const Card = ({ post }) => {
               <Stuser>{post.nickname}</Stuser>
               <StIcon>
                 <BiHeart />
-                {/* <span>{post.like}<span> */}
+                <span>{post.like}</span>
               </StIcon>
             </Stfooter>
           </Stcardinner>

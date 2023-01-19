@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Like from "../components/Like";
 import {
   BsSuitHeart,
   BsSuitHeartFill,
@@ -8,7 +9,7 @@ import {
 } from "react-icons/bs";
 
 import { RiEdit2Fill, RiDeleteBin5Fill } from "react-icons/ri";
-import Comments from "../components/comments/Comment";
+import Comments from "../components/comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -22,32 +23,20 @@ import { useRef } from "react";
 const Detail = ({ list }) => {
   const dispatch = useDispatch();
   const param = useParams();
-  console.log(param.id);
   const navigate = useNavigate();
-
-  //좋아요
-  const [like, setLike] = React.useState(true);
-
-  const likeClick = () => {
-    if (like) {
-      setLike(false);
-    } else {
-      setLike(true);
-    }
-  };
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedDtail, setUpdatedDetail] = useState("");
 
   const detail = useSelector((state) => state.detail.list);
-  // console.log(detail);
+
   useEffect(() => {
     dispatch(__getPostDetail(param.id));
     return () => dispatch(clearPost());
   }, [dispatch, param.id]);
 
   useEffect(() => {
-    setUpdatedDetail(detail.content);
+    setUpdatedDetail(detail?.content);
   }, [detail]);
 
   // 정답 제거하기
@@ -62,9 +51,9 @@ const Detail = ({ list }) => {
 
   // //edit 시 수정 전 값 ref에 받기
   const editTitleInput = useRef("");
-  editTitleInput.current = detail.title;
+  editTitleInput.current = detail?.title;
   const editContentInput = useRef();
-  editContentInput.current = detail.content;
+  editContentInput.current = detail?.content;
   const editAnswerInput = useRef();
 
   const onEditHandler = async (list) => {
@@ -96,108 +85,109 @@ const Detail = ({ list }) => {
   const answerInput = useRef();
   return (
     <>
-      {!isEditMode ? (
-        <StContainer>
-          <Stwrap>
-            <StTitle>문제를 풀어봅시다.</StTitle>
-            <StMain>
-              <StWrap>
-                {whoAmI?.nickname === detail.nickname ? (
-                  <StIcon>
-                    <RiEdit2Fill
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        const result = window.confirm("수정하쉴?");
-                        if (result) {
-                          // console.log("들어오나? 이벤트쪽");
-                          return onEditableHandler();
-                        } else {
-                          return;
-                        }
-                      }}
-                      color="white"
-                      size={35}
-                    />
+      <>
+        {!isEditMode ? (
+          <>
+            <StContainer>
+              <Stwrap>
+                <StTitle>문제를 풀어봅시다.</StTitle>
+                <StMain>
+                  <StWrap>
+                    {whoAmI?.nickname === detail?.nickname ? (
+                      <StIcon>
+                        <RiEdit2Fill
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            const result = window.confirm("수정하쉴?");
+                            if (result) {
+                              // console.log("들어오나? 이벤트쪽");
+                              return onEditableHandler();
+                            } else {
+                              return;
+                            }
+                          }}
+                          color="white"
+                          size={35}
+                        />
 
-                    <RiDeleteBin5Fill
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        const result = window.confirm("정말 지울까요?");
-                        if (result) {
-                          return onDeleteHandler();
-                        } else {
-                          return;
-                        }
-                      }}
-                      color="white"
-                      size={35}
-                    />
-                  </StIcon>
-                ) : null}
+                        <RiDeleteBin5Fill
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            const result = window.confirm("정말 지울까요?");
+                            if (result) {
+                              return onDeleteHandler();
+                            } else {
+                              return;
+                            }
+                          }}
+                          color="white"
+                          size={35}
+                        />
+                      </StIcon>
+                    ) : null}
 
-                <StinputBox>
-                  <StBox boxHeight="50px">{detail?.title}</StBox>
-                  <StBox boxHeight="300px">{detail?.content}</StBox>
-                  <StInputWrap>
-                    <StInput
+                    <StinputBox>
+                      <StBox boxHeight="50px">{detail?.title}</StBox>
+                      <StBox boxHeight="300px">{detail?.content}</StBox>
+                      <StInputWrap>
+                        <StInput
+                          type="text"
+                          name="answer"
+                          ref={answerInput}
+                          placeholder="답 제출하는 곳"
+                        />
+                        <StButton onClick={onSubmitAnswerHandler}>
+                          작성하기
+                        </StButton>
+                      </StInputWrap>
+                    </StinputBox>
+                  </StWrap>
+                </StMain>
+                <StIconWrap>
+                  <Like isLiked={detail?.isLiked} detailId={param.id} />
+                  {/* <span>{detail.like}</span> */}
+                </StIconWrap>
+              </Stwrap>
+            </StContainer>
+            <Comments />
+          </>
+        ) : (
+          // 수정 버튼을 누른 후의 부분
+          <StContainer>
+            <Stwrap>
+              <StTitle>수정 중 입니다.</StTitle>
+              <StMain>
+                <StWrap>
+                  <StinputBox>
+                    <StEditInput
                       type="text"
-                      name="answer"
-                      ref={answerInput}
-                      placeholder="답제출하는 곳"
+                      name="editTitleInput"
+                      ref={editTitleInput}
+                      defaultValue={editTitleInput.current}
                     />
-                    <StButton onClick={onSubmitAnswerHandler}>
-                      작성하기
-                    </StButton>
-                  </StInputWrap>
-                </StinputBox>
-              </StWrap>
-            </StMain>
-            <StIconWrap>
-              {like ? (
-                <BsSuitHeart onClick={likeClick} />
-              ) : (
-                <BsSuitHeartFill onClick={likeClick} color="red" />
-              )}
-              <span>{detail.like}</span>
-            </StIconWrap>
-          </Stwrap>
-        </StContainer>
-      ) : (
-        // 수정 버튼을 누른 후의 부분
-        <StContainer>
-          <Stwrap>
-            <StTitle>수정 중 입니다.</StTitle>
-            <StMain>
-              <StWrap>
-                <StinputBox>
-                  <StEditInput
-                    type="text"
-                    name="editTitleInput"
-                    ref={editTitleInput}
-                    defaultValue={editTitleInput.current}
-                  />
-                  <Textarea
-                    type="text"
-                    name="editContentInput"
-                    ref={editContentInput}
-                    defaultValue={editContentInput.current}
-                  />
-                  <StEditInput
-                    type="text"
-                    name="editAnswer"
-                    ref={editAnswerInput}
-                  />
-                  <StEditButtonBox>
-                    <button onClick={onEditHandler}>수정하기</button>
-                    <button onClick={onEditableHandler}>취소</button>
-                  </StEditButtonBox>
-                </StinputBox>
-              </StWrap>
-            </StMain>
-            <StIconWrap></StIconWrap>
-          </Stwrap>
-        </StContainer>
-      )}
+                    <Textarea
+                      type="text"
+                      name="editContentInput"
+                      ref={editContentInput}
+                      defaultValue={editContentInput.current}
+                    />
+                    <StEditInput
+                      type="text"
+                      name="editAnswer"
+                      ref={editAnswerInput}
+                    />
+                    <StEditButtonBox>
+                      <button onClick={onEditHandler}>수정하기</button>
+                      <button onClick={onEditableHandler}>취소</button>
+                    </StEditButtonBox>
+                  </StinputBox>
+                </StWrap>
+              </StMain>
+              <StIconWrap></StIconWrap>
+            </Stwrap>
+          </StContainer>
+        )}
+      </>
     </>
   );
 };

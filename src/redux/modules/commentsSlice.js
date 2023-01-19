@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import http from "../../api/http";
-// import { isDev, serverUrl } from ".";
 
 export const __getCommentsThunk = createAsyncThunk(
   "GET_COMMENTS",
@@ -57,11 +56,19 @@ export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      const { data } = await http.post(`/comment`, payload);
+      // console.log(payload);
+      const data = await http.post(`/comment/${payload.id}`, {
+        comment: payload.comment,
+      });
+      if (data.status === 201) {
+        alert("댓글이 작성되었습니다.");
+      }
       return thunkAPI.fulfillWithValue(data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e);
+    } catch (error) {
+      if (error.response.status === 400) {
+        alert("잘못된 방법입니다.");
+      }
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

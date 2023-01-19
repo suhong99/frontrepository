@@ -61,6 +61,23 @@ export const __updatePostDetail = createAsyncThunk(
   }
 );
 
+export const __editLikeness = createAsyncThunk(
+  "EDIT_LIKENESS",
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    try {
+      const data = await http.put(`/quiz/like/${payload.id}`, {
+        likeStatus: payload.likeStatus,
+      });
+      console.log(data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      // if(error.res)
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __submitAnswer = createAsyncThunk(
   "SUBMIT_ANSWER",
   async (payload, thunkAPI) => {
@@ -71,8 +88,7 @@ export const __submitAnswer = createAsyncThunk(
       const data = await http.post(`/quiz/${payload.id}/answer`, {
         answer: payload.answer,
       });
-      console.log(data);
-      console.log(data.data.correct);
+
       if (data.status === 200) {
         data.data.correct ? alert("정답입니다") : alert("땡~");
       }
@@ -88,7 +104,7 @@ export const __deletePostDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     // const navigate = useNavigate();
 
-    console.log(payload);
+    // console.log(payload);
     try {
       const data = await http.delete(`/quiz/${payload}`);
       if (data.status === 204) {
@@ -162,6 +178,15 @@ const detailSlice = createSlice({
       state.isLoading = false;
     },
     [__submitAnswer.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__editLikeness.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__editLikeness.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__editLikeness.rejected]: (state, action) => {
       state.isLoading = false;
     },
   },

@@ -95,8 +95,8 @@ const Comment = ({ comment }) => {
       ) : (
         <>
           <StInputWrapper>
-            <div>{comment.username}</div>
-            <div>{comment.content}</div>
+            {/* <div>{comment.username}</div>
+            <div>{comment.content}</div> */}
           </StInputWrapper>
 
           <StControlGroup>
