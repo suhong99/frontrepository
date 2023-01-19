@@ -1,36 +1,51 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import Layout from "../shared/Layout";
-import { clearPost, __addPost } from "../redux/modules/postSlice";
+import { useDispatch } from "react-redux";
+import { __addPost } from "../redux/modules/postSlice";
 import { useNavigate } from "react-router-dom";
-
+import { useRef } from "react";
 const Post = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const isSuccess = useSelector((state) => state.records.isSuccess);
-  // const { isLoading, error } = useSelector((state) => state.records);
+  //입력값은 ref로
+  const titleInput = useRef();
+  const contentInput = useRef();
+  const answerInput = useRef();
 
-  const [post, setPost] = useState({
-    title: "",
-    content: "",
-    answer: "",
-  });
+  //삭제하기
+  const onCancle = (e) => {
+    // navigate(-1);
+    e.stopPropagation();
+    const result = window.confirm("정말 취소할까요?");
+    console.log(result);
+    if (result) {
+      return navigate(-1);
+    } else {
+      return;
+    }
+  };
+  // 제출하기
+  const onPostHandler = (e) => {
+    // console.log("들어오나?");
+    e.preventDefault();
 
-  // useEffect(() => {
-  //   if (!isSuccess) return;
-  //   if (isSuccess) navigate("/list");
-  //   return () => dispatch(clearPost());
-  // }, [dispatch, isSuccess, navigate]);
+    if (
+      titleInput.current.value.trim() === "" ||
+      answerInput.current.value.trim() === "" ||
+      contentInput.current.value.trim() === ""
+    ) {
+      return alert("빈 값을 체크해주세요");
+    }
 
-  const onChangeHandler = (event) => {
-    console.log("onChangeHandler입니다.");
-    const { name, value } = event.target;
-    setPost({
-      ...post,
-      [name]: value,
-    });
+    dispatch(
+      __addPost({
+        title: titleInput.current.value,
+        content: contentInput.current.value,
+        answer: answerInput.current.value,
+      })
+    );
+    navigate(-1);
+    // titleInput.current.focus();
   };
 
   // if (isLoading) {
@@ -41,60 +56,41 @@ const Post = () => {
   //   return <div>{error.message}</div>;
   // }
 
-  console.log(post);
-
   return (
     <>
       <StContainer>
-        <StForm
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (
-              post.content.trim() === "" ||
-              post.title.trim() === "" ||
-              post.answer.trim() === ""
-            ) {
-              return alert("모든 항목 입력해주세요");
-            }
-
-            dispatch(__addPost(post));
-            navigate("/List");
-          }}
-        >
+        <StForm>
           <StTitle>문제를 만들어봅시다.</StTitle>
 
           <StMain>
             <StinputBox>
               <StInput
                 type="text"
+                name="titleInput"
+                ref={titleInput}
                 placeholder="제목을 적어주세요."
-                name={"title"}
-                value={post.title}
-                onChange={onChangeHandler}
               />
             </StinputBox>
             <StinputBox>
               <Textarea
-                name={"content"}
-                rows="12"
-                onChange={onChangeHandler}
+                type="text"
+                name="contentInput"
+                ref={contentInput}
                 placeholder="내용을 적어주세요."
-                value={post.content}
               />
             </StinputBox>
             <StinputBox>
               <StInput
                 type="text"
-                onChange={onChangeHandler}
+                name="answerInput"
+                ref={answerInput}
                 placeholder="답을 적어주세요."
-                value={post.answer}
-                name={"answer"}
               />
             </StinputBox>
 
             <Stbuttonwrap>
-              <Stbutton type="submit">작성하기</Stbutton>
-              <Stbutton type="submit">취소하기</Stbutton>
+              <Stbutton onClick={onPostHandler}>작성하기</Stbutton>
+              <Stbutton onClick={onCancle}>취소하기</Stbutton>
             </Stbuttonwrap>
           </StMain>
         </StForm>
@@ -105,7 +101,7 @@ const Post = () => {
 
 export default Post;
 
-const StForm = styled.form`
+const StForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,7 +120,7 @@ const StTitle = styled.div`
   border-radius: 20px 20px 0 0;
   width: 700px;
   padding: 15px;
-  margin: 10px 0 0 10px;
+  /* margin: 10px 0 0 10px; */
   background-image: linear-gradient(
     to top,
     #1e3c72 0%,
@@ -166,7 +162,7 @@ const StInput = styled.input`
   border: none;
   border-radius: 20px;
   box-sizing: border-box;
-  height: 60px;
+  height: 70px;
   width: 600px;
   outline: none;
   padding: 30px;
@@ -178,7 +174,8 @@ const Textarea = styled.textarea`
   border-radius: 20px;
   box-sizing: border-box;
   width: 600px;
-  padding: 12px;
+  height: 300px;
+  padding: 20px;
   font-size: 20px;
 `;
 

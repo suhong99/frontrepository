@@ -72,7 +72,7 @@ export const __postLogin = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await http.post("/members/login", payload).then((res) => {
-        console.log(res.headers.authorization);
+        // console.log(res.headers.authorization);
         sessionStorage.setItem("authorization", res.headers.authorization);
         // sessionStorage.setItem("refreshToken", res.data.refreshToken);
         return res;

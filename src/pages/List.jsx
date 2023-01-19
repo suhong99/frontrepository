@@ -14,7 +14,7 @@ const List = () => {
   const navigate = useNavigate();
 
   const { list } = useSelector((state) => state.post);
-  console.log("리스트", list);
+  // console.log("리스트", list);
 
   useEffect(() => {
     dispatch(__getPost());
