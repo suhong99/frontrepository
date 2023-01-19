@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BsSuitHeartFill, BsFillChatFill } from "react-icons/bs";
+import {
+  BsSuitHeart,
+  BsSuitHeartFill,
+  BsChat,
+  BsChatFill,
+} from "react-icons/bs";
+
 import { RiEdit2Fill, RiDeleteBin5Fill } from "react-icons/ri";
 import Comments from "../components/comments/Comment";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   __getPostDetail,
   __updatePostDetail,
+  __deletePostDetail,
 } from "../redux/modules/detailSlice";
 import { clearPost } from "../redux/modules/postSlice";
 
@@ -23,10 +30,21 @@ import { clearPost } from "../redux/modules/postSlice";
 
 //6. 댓글 아이콘 누르면 댓글창 보이고 댓글확인
 
-const Detail = () => {
+const Detail = ({ list }) => {
   const dispatch = useDispatch();
   const param = useParams();
   const navigate = useNavigate();
+
+  //좋아요
+  const [like, setLike] = React.useState(true);
+
+  const likeClick = () => {
+    if (like) {
+      setLike(false);
+    } else {
+      setLike(true);
+    }
+  };
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedDtail, setUpdatedDetail] = useState("");
@@ -42,8 +60,12 @@ const Detail = () => {
     setUpdatedDetail(detail.content);
   }, [detail]);
 
-  const onEditdableHandler = async (detail) => {
-    if (updatedDtail.trim() === "") {
+  const onDeleteHandler = () => {
+    dispatch(__deletePostDetail(list.qid));
+  };
+
+  const onEditdableHandler = async (list) => {
+    if (__updatePostDetail.trim() === "") {
       return alert("입력 내용 없습니다.");
     }
     dispatch(__updatePostDetail({ ...detail, content: updatedDtail }));
@@ -53,32 +75,58 @@ const Detail = () => {
   return (
     <>
       <StContainer>
-        <StTitle>문제를 풀어봅시다.</StTitle>
-        <StMain>
-          <StWrap>
-            <StIcon>
-              <RiEdit2Fill color="white" size={35} />
-              <RiDeleteBin5Fill color="white" size={35} />
-            </StIcon>
-            <StinputBox>
-              <StBox boxHeight="50px">{detail?.title}</StBox>
-              <StBox boxHeight="200px">{detail?.content}</StBox>
-              <StInputWrap>
-                <StInput placeholder="답제출하는 곳" />
-                <StButton>작성하기</StButton>
-              </StInputWrap>
-            </StinputBox>
-          </StWrap>
-        </StMain>
-        <StIcon>
-          <BsSuitHeartFill />
-          <BsSuitHeartFill color="red" />
-          <span>0</span>
+        <Stwrap>
+          <StTitle>문제를 풀어봅시다.</StTitle>
+          <StMain>
+            <StWrap>
+              <StIcon>
+                <RiEdit2Fill
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    const result = window.confirm("수정하쉴?");
+                    if (result) {
+                      return onEditdableHandler;
+                    } else {
+                      return;
+                    }
+                  }}
+                  color="white"
+                  size={35}
+                />
 
-          <BsFillChatFill color="gray" />
-          <BsFillChatFill color="#3e405e" />
-        </StIcon>
-        {/* <Comments />ㄴ */}ㄴ
+                <RiDeleteBin5Fill
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    const result = window.confirm("정말 지울까요?");
+                    if (result) {
+                      return onDeleteHandler();
+                    } else {
+                      return;
+                    }
+                  }}
+                  color="white"
+                  size={35}
+                />
+              </StIcon>
+              <StinputBox>
+                <StBox boxHeight="50px">{list?.title}</StBox>
+                <StBox boxHeight="300px">{list?.content}</StBox>
+                <StInputWrap>
+                  <StInput placeholder="답제출하는 곳" />
+                  <StButton>작성하기</StButton>
+                </StInputWrap>
+              </StinputBox>
+            </StWrap>
+          </StMain>
+          <StIconWrap>
+            {like ? (
+              <BsSuitHeart onClick={likeClick} />
+            ) : (
+              <BsSuitHeartFill onClick={likeClick} color="red" />
+            )}
+            <span>0</span>
+          </StIconWrap>
+        </Stwrap>
       </StContainer>
     </>
   );
@@ -89,13 +137,22 @@ export default Detail;
 const StContainer = styled.div`
   width: 100vh;
   height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Stwrap = styled.div`
+  width: 700px;
+  height: 700px;
 `;
 
 const StMain = styled.div`
   box-sizing: border-box;
   border-radius: 0 0 20px 20px;
   width: 700px;
-  height: 550px;
+  height: 700px;
   padding: 10px;
   margin: 0 10px;
   display: flex;
@@ -106,6 +163,7 @@ const StMain = styled.div`
     #bdc2e8 1%,
     #e6dee9 100%
   );
+  align-items: center;
 `;
 
 const StWrap = styled.div`
@@ -176,12 +234,20 @@ const StButton = styled.button`
 `;
 
 const StIcon = styled.div`
-  border: 3px solid red;
   display: flex;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 30px;
   font-size: 30px;
   font-weight: 500;
   padding-left: 30px;
   cursor: pointer;
+`;
+
+const StIconWrap = styled.div`
+  /* border: 3px solid blue; */
+  font-size: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 400px;
+  margin: 20px 0 0 50px;
 `;

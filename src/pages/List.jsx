@@ -4,8 +4,10 @@ import styled from "styled-components";
 import Card from "../components/Card";
 import { __getPost } from "../redux/modules/postSlice";
 import Detail from "./Detail";
-import Slide from "../components/Slide";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -18,15 +20,28 @@ const List = () => {
     dispatch(__getPost());
   }, [dispatch]);
 
+  //슬라이드
+  //슬라이드 settings 부분
+  const settings = {
+    dots: true, // 점은 보임
+    infinite: true, // 무한
+    speed: 500,
+    slidesToShow: 4, //보이기고 싶은 장수
+    slidesToScroll: 3, //몇장씩 넘어갈 지
+  };
+
   return (
     <>
       <StTitle>게시판</StTitle>
-      {/* 무한스크롤 아래로 + 오른쪽으로가는 슬라이드 */}
-      {/* <Slide /> */}
       <StListContainer>
-        {list.map((post) => (
-          <Card key={post.qId} post={post} />
-        ))}
+        <StBox>
+          {/* 슬라이드 적용 부분 */}
+          <Slider {...settings}>
+            {list.map((post) => (
+              <Card key={post.qId} post={post} />
+            ))}
+          </Slider>
+        </StBox>
       </StListContainer>
     </>
   );
@@ -35,7 +50,6 @@ const List = () => {
 export default List;
 
 const StTitle = styled.div`
-  /* border: 2px solid; */
   width: 300px;
   border-radius: 10px;
   margin-top: 30px;
@@ -50,11 +64,18 @@ const StTitle = styled.div`
     #1e3c72 1%,
     #2a5298 100%
   );
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StListContainer = styled.div`
-  /* border: 1px solid; */
+  /* border: 1px solid blue; */
+  margin: 100px;
   width: 100%;
-  display: flex;
-  /* flex-wrap: wrap; */
+  height: 400px;
+`;
+
+const StBox = styled.div`
+  /* border: 1px solid red; */
 `;

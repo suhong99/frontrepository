@@ -8,6 +8,20 @@ const initialState = {
   error: null,
 };
 
+export const __addPostDetail = createAsyncThunk(
+  "ADD_POST_DETAIL",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    try {
+      const { data } = await axios.post("/list", payload);
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getPostDetail = createAsyncThunk(
   "GET_POST_DETAIL",
   async (payload, thunkAPI) => {
@@ -51,6 +65,19 @@ const detailSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [__addPostDetail.pending]: (state) => {
+      state.isSuccess = false;
+      state.isLoading = true;
+    },
+    [__addPostDetail.fulfilled]: (state, action) => {
+      state.isSuccess = true;
+      state.isLoading = false;
+      state.list.push(action.payload);
+    },
+    [__addPostDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     [__getPostDetail.pending]: (state) => {
       state.isLoading = true;
     },
@@ -76,6 +103,8 @@ const detailSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    //삭제하기
     [__deletePostDetail.fulfilled]: (state, action) => {
       const target = state.records.findIndex(
         (comment) => comment.id === action.payload

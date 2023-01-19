@@ -104,61 +104,73 @@ const SignUp = () => {
 
   return (
     <SignUpLayout>
-      <SignUpHeader>회원가입</SignUpHeader>
-      <SingUpForm onSubmit={(e) => e.preventDefault()}>
-        <SignUpWords>아이디</SignUpWords>
-        <InputBox>
-          <SignUpInput
-            type="text"
-            name="memberId"
-            value={memberId}
-            placeholder="ID를 입력해주세요"
-            onChange={onChangeMemberHandler}
-          />
-          <MainButton onClick={onIdCheckhandler}>중복확인</MainButton>
-        </InputBox>
-        <HelperText id="help-memberId" className="help">
-          {memberIdInput}
-        </HelperText>
-        <SignUpWords>닉네임</SignUpWords>
-        <InputBox>
-          <SignUpInput
-            type="text"
-            name="nickname"
-            value={nickname}
-            placeholder="닉네임을 입력해주세요"
-            onChange={onChangeMemberHandler}
-          />
-          <MainButton onClick={onNickCheckhandler}>중복확인</MainButton>
-        </InputBox>
-        {/* <p id="help-nickname" className="help">
+      <SingUpBox>
+        <SignUpHeader>Sign Up</SignUpHeader>
+        <SingUpForm onSubmit={(e) => e.preventDefault()}>
+          <StInputcontainer>
+            <InputBox>
+              <SignUpInput
+                type="text"
+                name="memberId"
+                value={memberId}
+                placeholder="ID를 입력해주세요"
+                onChange={onChangeMemberHandler}
+              />
+              <MainButton onClick={onIdCheckhandler}>중복확인</MainButton>
+            </InputBox>
+
+            <HelperText id="help-memberId" className="help">
+              {memberIdInput}
+            </HelperText>
+
+            <InputBox>
+              <SignUpInput
+                type="text"
+                name="nickname"
+                value={nickname}
+                placeholder="닉네임을 입력해주세요"
+                onChange={onChangeMemberHandler}
+              />
+              <MainButton onClick={onNickCheckhandler}>중복확인</MainButton>
+            </InputBox>
+
+            {/* <p id="help-nickname" className="help">
           {nicknameInput}
         </p> */}
-        <SignUpWords>비밀번호</SignUpWords>
-        <PasswordBox>
-          <SingUpPasswordInput
-            type="password"
-            name="password"
-            value={password}
-            placeholder="비밀번호를 입력하세요"
-            onChange={onChangeMemberHandler}
-          />
-          <HelperText id="help-password1" className="help">
-            {passInput}
-          </HelperText>
-          <SingUpPasswordInput
-            type="password"
-            name="passwordCheck"
-            value={passwordCheck}
-            placeholder="비밀번호 확인해주세요"
-            onChange={onChangeMemberHandler}
-          />
-          <p id="help-password2" className="help">
-            {passCheckInput}
-          </p>
-        </PasswordBox>
-        <MainButton onClick={onSubmitUserHandler}> 가입하기</MainButton>
-      </SingUpForm>
+          </StInputcontainer>
+
+          <PasswordBox>
+            <SingUpPasswordInput
+              type="password"
+              name="password"
+              value={password}
+              placeholder="비밀번호를 입력하세요"
+              onChange={onChangeMemberHandler}
+            />
+            <HelperText id="help-password1" className="help">
+              {passInput}
+            </HelperText>
+            <SingUpPasswordInput
+              type="password"
+              name="passwordCheck"
+              value={passwordCheck}
+              placeholder="비밀번호 확인해주세요"
+              onChange={onChangeMemberHandler}
+            />
+            <p id="help-password2" className="help">
+              {passCheckInput}
+            </p>
+          </PasswordBox>
+
+          <Stbutton>
+            <MainButton onClick={onSubmitUserHandler}> 가입하기</MainButton>
+          </Stbutton>
+        </SingUpForm>
+      </SingUpBox>
+
+      <StSignBack>
+        <MainImage alt="sign" src="signup.png" />
+      </StSignBack>
     </SignUpLayout>
   );
 };
@@ -176,25 +188,15 @@ const SignUpLayout = styled.div`
   );
 `;
 
-const StSignBack = styled.div`
-  display: flex;
-  width: 500px;
-  display: flex;
-  justify-content: center;
-`;
-
 const SingUpForm = styled.form``;
 
 const SingUpBox = styled.div`
   font-weight: bold;
   font-size: 20px;
-  padding: 25px;
+  padding: 20px;
   margin: 20px;
   width: 500px;
-  display: flex;
-  flex-direction: column;
   background-color: white;
-  gap: 20px;
 `;
 
 const SignUpHeader = styled.div`
@@ -209,6 +211,7 @@ const SignUpInput = styled.input`
   height: 40px;
   width: 180px;
 `;
+
 const SingUpPasswordInput = styled.input`
   /* font-size: 20px; */
   height: 40px;
@@ -222,11 +225,6 @@ const SignUpWords = styled.div`
   margin: 5px;
   margin-left: 40px;
 `;
-const PasswordBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
 
 const HelperText = styled.pre`
   /* margin: auto; */
@@ -236,21 +234,40 @@ const HelperText = styled.pre`
   color: red;
 `;
 const InputBox = styled.div`
-  border: 2px solid black;
+  border: 2px solid gray;
   width: 400px;
   /* height: 70px; */
   padding: 10px;
   border-radius: 10px;
   appearance: none;
-  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const MainImage = styled.img`
-  margin-top: 5%;
-  width: 300px;
-  height: 360px;
-  margin: 60px 25px 0 0;
+  width: 310px;
+  height: 370px;
+  margin: 90px 25px 0 0;
+`;
+
+const StSignBack = styled.div`
+  display: flex;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+`;
+
+const StInputcontainer = styled.div`
+  margin-top: 30px;
+`;
+
+const PasswordBox = styled.div`
+  margin-top: 30px;
+`;
+
+const Stbutton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
