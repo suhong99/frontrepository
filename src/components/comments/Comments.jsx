@@ -11,7 +11,7 @@ const Comments = () => {
   const dispatch = useDispatch();
   const [isShow, setisShow] = useState(false);
   const { data } = useSelector((state) => state.comments.commentsByTodoId);
-
+  console.log(data);
   useEffect(() => {
     if (isShow) {
       dispatch(__getCommnetsByTodoId(id));
@@ -30,9 +30,9 @@ const Comments = () => {
       </StToggleContainer>
       <AddCommentForm />
       <StCommentList>
-        {data?.map((comment) => (
+        {/* {data?.map((comment) => (
           <Comment key={comment.id} comment={comment} />
-        ))}
+        ))} */}
       </StCommentList>
     </StContainer>
   );
