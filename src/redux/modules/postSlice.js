@@ -14,10 +14,7 @@ export const __getPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await http.get("/quiz");
-<<<<<<< HEAD
       console.log(data);
-=======
->>>>>>> Detail
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
