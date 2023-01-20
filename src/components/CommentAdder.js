@@ -2,7 +2,7 @@ import React from "react";
 import { BsChat, BsChatFill } from "react-icons/bs";
 
 const CommentAdder = (props) => {
-  console.log(props);
+  // console.log(props);
   const Commenthandler = () => {
     props.setShowComment(!props.showComment);
   };

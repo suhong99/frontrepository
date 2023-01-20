@@ -64,15 +64,12 @@ export const __updatePostDetail = createAsyncThunk(
 export const __editLikeness = createAsyncThunk(
   "EDIT_LIKENESS",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const data = await http.put(`/quiz/like/${payload.id}`, {
         likeStatus: payload.likeStatus,
       });
-      console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      // if(error.res)
       return thunkAPI.rejectWithValue(error);
     }
   }

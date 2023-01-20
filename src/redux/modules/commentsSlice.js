@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import http from "../../api/http";
 
 export const __getCommentsThunk = createAsyncThunk(
@@ -17,11 +16,9 @@ export const __getCommentsThunk = createAsyncThunk(
 export const __getCommnetsByTodoId = createAsyncThunk(
   "GET_COMMENT_BY_POST_ID",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const { data } = await http.get(`/comment/${payload}`);
       // data 어떻게 오는지 확인하고 뒷 부분 해야함. 현재 401때문에 진행 안됨.
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -50,7 +47,6 @@ export const __deleteComment = createAsyncThunk(
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const data = await http.put(`/comment/${payload.cId}`, {
         comment: payload.comment,
@@ -76,7 +72,6 @@ export const __addComment = createAsyncThunk(
       if (data.status === 201) {
         alert("댓글이 작성되었습니다.");
       }
-      // console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       if (error.response.status === 400) {
@@ -129,8 +124,7 @@ export const commentsSlice = createSlice({
     [__getCommnetsByTodoId.fulfilled]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
       state.commentsByTodoId.data = action.payload;
-      // console.log(state.commentsByTodoId.data);
-      // console.log("get에서");
+
       // console.log(state.commentsByTodoId.data.allComments);
     },
     [__getCommnetsByTodoId.rejected]: (state, action) => {
@@ -144,9 +138,7 @@ export const commentsSlice = createSlice({
     },
     [__deleteComment.fulfilled]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
-      // console.log(state.commentsByTodoId);
-      // console.log("삭제에서");
-      console.log(state.commentsByTodoId.data);
+
       const target = state.commentsByTodoId.data.allComments.findIndex(
         (comment) => comment.cId === action.payload
       );
@@ -166,7 +158,6 @@ export const commentsSlice = createSlice({
         (comment) => comment.cId === action.payload.cId
       );
       state.isLoading = false;
-      console.log(action.payload);
       state.commentsByTodoId.data.allComments.splice(target, 1, action.payload);
     },
     [__updateComment.rejected]: (state, action) => {

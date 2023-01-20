@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Like from "../components/Like";
-import { BsChat, BsChatFill } from "react-icons/bs";
 
 import { RiEdit2Fill, RiDeleteBin5Fill } from "react-icons/ri";
 import Comments from "../components/comments/Comments";
@@ -22,7 +21,7 @@ const Detail = ({ list }) => {
   const navigate = useNavigate();
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const [updatedDtail, setUpdatedDetail] = useState("");
+  // const [updatedDtail, setUpdatedDetail] = useState("");
 
   const detail = useSelector((state) => state.detail.list);
 
@@ -31,9 +30,9 @@ const Detail = ({ list }) => {
     return () => dispatch(clearPost());
   }, [dispatch, param.id]);
 
-  useEffect(() => {
-    setUpdatedDetail(detail?.content);
-  }, [detail]);
+  // useEffect(() => {
+  //   setUpdatedDetail(detail?.content);
+  // }, [detail]);
 
   // 정답 제거하기
   const onDeleteHandler = () => {
@@ -84,7 +83,7 @@ const Detail = ({ list }) => {
 
   //props로 내릴 값. showComment를 통해서 댓글을 보여줄 지 말지 결정
   const [showComment, setShowComment] = useState(false);
-  console.log(showComment);
+  // console.log(showComment);
 
   return (
     <>
