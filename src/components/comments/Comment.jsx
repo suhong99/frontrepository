@@ -19,6 +19,9 @@ const Comment = ({ comment }) => {
   editCommentInput.current = comment.comment;
   // console.log(editCommentInput.current);
 
+  // json 형식으로 저장된 닉네임 parse로 바꾸기
+  const whoAmIComment = JSON.parse(sessionStorage.getItem("memberinfo"));
+
   const onDeleteButtonHandler = () => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
@@ -83,25 +86,24 @@ const Comment = ({ comment }) => {
             <div>{comment.nickname}</div>
             <div>{comment.comment}</div>
           </StInputWrapper>
-
-          <StControlGroup>
-            <button
-              size="small"
-              bgcolor="#FE531F"
-              // disabled={isGlobalEditmode}
-              onClick={onEditableHandler}
-            >
-              <VscEdit size="16" color="#fff" />
-            </button>
-            <button
-              size="small"
-              bgcolor="#FE531F"
-              onClick={onDeleteButtonHandler}
-              // disabled={isGlobalEditmode}
-            >
-              <VscTrash size="16" color="#fff" />
-            </button>
-          </StControlGroup>
+          {whoAmIComment.nickname === comment.nickname ? (
+            <StControlGroup>
+              <button
+                size="small"
+                bgcolor="#FE531F"
+                onClick={onEditableHandler}
+              >
+                <VscEdit size="16" color="#fff" />
+              </button>
+              <button
+                size="small"
+                bgcolor="#FE531F"
+                onClick={onDeleteButtonHandler}
+              >
+                <VscTrash size="16" color="#fff" />
+              </button>
+            </StControlGroup>
+          ) : null}
         </>
       )}
     </StComment>
