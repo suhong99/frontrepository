@@ -11,9 +11,9 @@ const Comments = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.comments.commentsByTodoId);
   // console.log(data);
-  // console.log(data.allComments);
+  // console.log(data.allComments); //allComments라는 배열이 있음.
   useEffect(() => {
-    console.log(id);
+    // console.log(id);
     dispatch(__getCommnetsByTodoId(id));
   }, [dispatch, id]);
 
@@ -32,7 +32,7 @@ const Comments = () => {
 export default Comments;
 
 const StContainer = styled.div`
-  width: 100%;
+  width: 700px;
   background-color: #fff;
 `;
 
@@ -44,6 +44,6 @@ const StToggleContainer = styled.div`
 
 const StCommentList = styled.div`
   height: 350px;
-  overflow: scroll;
+  /* overflow: scroll; */
   margin-bottom: 20px;
 `;
