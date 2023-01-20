@@ -17,7 +17,7 @@ const Comment = ({ comment }) => {
   const { id } = useParams();
   const editCommentInput = useRef();
   editCommentInput.current = comment.comment;
-  console.log(editCommentInput.current);
+  // console.log(editCommentInput.current);
 
   const onDeleteButtonHandler = () => {
     const result = window.confirm("삭제하시겠습니까?");
@@ -30,9 +30,10 @@ const Comment = ({ comment }) => {
   const onUpdateButtonHandler = () => {
     const result = window.confirm("수정하시겠습니까?");
     if (result) {
-      console.log(editCommentInput);
+      // console.log(editCommentInput);
       dispatch(
         __updateComment({
+          ...comment,
           cId: comment.cId,
           comment: editCommentInput.current.value,
         })
@@ -46,6 +47,7 @@ const Comment = ({ comment }) => {
 
   const onEditableHandler = () => {
     setIsEdit(!isEdit);
+    // editCommentInput.current.focus();
   };
 
   return (
@@ -53,7 +55,8 @@ const Comment = ({ comment }) => {
       {isEdit ? (
         <>
           <StInputWrapper>
-            <input
+            <EditMessage>{comment.nickname}이 수정할 내용 </EditMessage>
+            <EditInput
               type="text"
               maxLength={100}
               name="editCommentInput"
@@ -110,14 +113,32 @@ export default Comment;
 const StComment = styled.div`
   border-bottom: 1px solid #eee;
   padding: 0 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   /* overflow: scroll; */
 `;
 
 const StControlGroup = styled.div`
-  flex-shrink: 0;
-  gap: 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  div {
+    width: 40px;
+    height: 20px;
+  }
 `;
 
+const EditInput = styled.input`
+  border: 0px;
+  width: 500px;
+`;
 const StInputWrapper = styled.div`
-  width: 70%;
+  width: 100%;
+  /* gap: 10px; */
+`;
+
+const EditMessage = styled.div`
+  font-size: 10px;
 `;

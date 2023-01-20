@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Like from "../components/Like";
-import {
-  BsSuitHeart,
-  BsSuitHeartFill,
-  BsChat,
-  BsChatFill,
-} from "react-icons/bs";
+import { BsChat, BsChatFill } from "react-icons/bs";
 
 import { RiEdit2Fill, RiDeleteBin5Fill } from "react-icons/ri";
 import Comments from "../components/comments/Comments";
@@ -20,6 +15,7 @@ import {
 import { clearPost } from "../redux/modules/postSlice";
 import { __submitAnswer } from "../redux/modules/detailSlice";
 import { useRef } from "react";
+import CommentAdder from "../components/CommentAdder";
 const Detail = ({ list }) => {
   const dispatch = useDispatch();
   const param = useParams();
@@ -55,8 +51,8 @@ const Detail = ({ list }) => {
   const editContentInput = useRef();
   editContentInput.current = detail?.content;
   const editAnswerInput = useRef();
-  console.log(editContentInput.current);
-  console.log(detail.content);
+  // console.log(editContentInput.current);
+  // console.log(detail.content);
 
   const onEditHandler = async (list) => {
     if (
@@ -85,6 +81,11 @@ const Detail = ({ list }) => {
   // json 형식으로 저장된 닉네임 parse로 바꾸기
   const whoAmI = JSON.parse(sessionStorage.getItem("memberinfo"));
   const answerInput = useRef();
+
+  //props로 내릴 값. showComment를 통해서 댓글을 보여줄 지 말지 결정
+  const [showComment, setShowComment] = useState(false);
+  console.log(showComment);
+
   return (
     <>
       <>
@@ -147,11 +148,14 @@ const Detail = ({ list }) => {
                 </StMain>
                 <StIconWrap>
                   <Like isLiked={detail?.isLiked} detailId={param.id} />
-                  {/* <span>{detail.like}</span> */}
+                  <CommentAdder
+                    showComment={showComment}
+                    setShowComment={setShowComment}
+                  />
                 </StIconWrap>
               </Stwrap>
             </StContainer>
-            <Comments />
+            {showComment ? <Comments /> : null}
           </>
         ) : (
           // 수정 버튼을 누른 후의 부분
@@ -185,7 +189,6 @@ const Detail = ({ list }) => {
                   </StinputBox>
                 </StWrap>
               </StMain>
-              <StIconWrap></StIconWrap>
             </Stwrap>
           </StContainer>
         )}
@@ -198,7 +201,7 @@ export default Detail;
 
 const StContainer = styled.div`
   width: 100vh;
-  height: 100vh;
+  height: 820px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -208,6 +211,9 @@ const StContainer = styled.div`
 const Stwrap = styled.div`
   width: 700px;
   height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StMain = styled.div`
@@ -239,7 +245,6 @@ const StTitle = styled.div`
   width: 700px;
   box-sizing: border-box;
   padding: 12px;
-  margin: 10px 0 0 10px;
   background-image: linear-gradient(
     to top,
     #1e3c72 0%,
@@ -311,11 +316,15 @@ const StIcon = styled.div`
 
 const StIconWrap = styled.div`
   /* border: 3px solid blue; */
+  gap: 10px;
   font-size: 30px;
   font-weight: 500;
-  cursor: pointer;
   width: 400px;
   margin: 20px 0 0 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const StEditInput = styled.input`

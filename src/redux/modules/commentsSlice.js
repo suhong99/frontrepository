@@ -76,7 +76,8 @@ export const __addComment = createAsyncThunk(
       if (data.status === 201) {
         alert("댓글이 작성되었습니다.");
       }
-      return thunkAPI.fulfillWithValue(data);
+      // console.log(data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       if (error.response.status === 400) {
         alert("잘못된 방법입니다.");
@@ -118,7 +119,7 @@ export const commentsSlice = createSlice({
     },
     [__getCommentsThunk.rejected]: (state, action) => {
       state.comments.isLoading = false;
-      state.comments.error = action.payload;
+      state.comments.error = action.payload; //data안에 allComments가 들어감
     },
 
     // 댓글 조회 (todoId)
@@ -128,6 +129,9 @@ export const commentsSlice = createSlice({
     [__getCommnetsByTodoId.fulfilled]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
       state.commentsByTodoId.data = action.payload;
+      // console.log(state.commentsByTodoId.data);
+      // console.log("get에서");
+      // console.log(state.commentsByTodoId.data.allComments);
     },
     [__getCommnetsByTodoId.rejected]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
@@ -140,10 +144,13 @@ export const commentsSlice = createSlice({
     },
     [__deleteComment.fulfilled]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
-      const target = state.commentsByTodoId.data.findIndex(
+      // console.log(state.commentsByTodoId);
+      // console.log("삭제에서");
+
+      const target = state.commentsByTodoId.data.allComments.findIndex(
         (comment) => comment.id === action.payload
       );
-      state.commentsByTodoId.data.splice(target, 1);
+      state.commentsByTodoId.data.allComments.splice(target, 1);
     },
     [__deleteComment.rejected]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
@@ -155,11 +162,12 @@ export const commentsSlice = createSlice({
       state.isLoading = true;
     },
     [__updateComment.fulfilled]: (state, action) => {
-      const target = state.commentsByTodoId.data.findIndex(
+      const target = state.commentsByTodoId.data.allComments.findIndex(
         (comment) => comment.id === action.payload.cId
       );
       state.isLoading = false;
-      state.commentsByTodoId.data.splice(target, 1, action.payload);
+      console.log(action.payload);
+      state.commentsByTodoId.data.allComments.splice(target, 1, action.payload);
     },
     [__updateComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -171,6 +179,7 @@ export const commentsSlice = createSlice({
     },
     [__addComment.fulfilled]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
+      state.commentsByTodoId.data = action.payload;
     },
     [__addComment.rejected]: (state, action) => {
       state.commentsByTodoId.isLoading = false;
