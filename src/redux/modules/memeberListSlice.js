@@ -12,6 +12,8 @@ const initialState = {
   isLogin: false,
   isLoading: false,
   error: null,
+  idNotChecked: true,
+  nickNotChecked: true,
 };
 
 //회원가입 POST요청
@@ -24,6 +26,9 @@ export const __postMember = createAsyncThunk(
     } catch (error) {
       console.log(error);
       if (error.response.status === 409) {
+        alert("작성 조건을 지켜주세요.");
+      }
+      if (error.response.status === 404) {
         alert("작성 조건을 지켜주세요.");
       }
       return thunkAPI.rejectWithValue(error);
@@ -131,10 +136,14 @@ const memberListSlice = createSlice({
     },
     [__checkMemberId.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.idNotChecked = false;
+
       alert("중복 확인 되었습니다.");
     },
     [__checkMemberId.rejected]: (state, action) => {
       state.isLoading = false;
+      state.idNotChecked = true;
+
       state.error = action.payload;
     },
     [__checkMemberNick.pending]: (state) => {
@@ -142,10 +151,13 @@ const memberListSlice = createSlice({
     },
     [__checkMemberNick.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.nickNotChecked = false;
       alert("중복 확인 되었습니다.");
     },
     [__checkMemberNick.rejected]: (state, action) => {
       state.isLoading = false;
+      state.nickNotChecked = true;
+
       state.error = action.payload;
     },
   },

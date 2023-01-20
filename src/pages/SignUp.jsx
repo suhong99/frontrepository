@@ -2,13 +2,14 @@ import React from "react";
 import MainButton from "../components/MainButton";
 import styled from "styled-components";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   __postMember,
   __checkMemberId,
   __checkMemberNick,
 } from "../redux/modules/memeberListSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,20 +28,12 @@ const SignUp = () => {
   const [passInput, setPassInput] = useState("");
   const [passCheckInput, setPassCheckInput] = useState("");
 
-  //제출 전 조건 설정
-  // 중복확인을 해야하는건 툴킷을 통해서 값 받는게 편할듯?
-  // 비밀번호와 비밀번호 확인은 useState으로 하면 될듯?
-
-  // const [passPossible, setPassPossible] = useState(false);
-  // const [passCheckPossible, setPassCheckPossible] = useState(false);
-
   // 입력 조건 정규식 validation?
   const regMemberId = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
 
   const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
   //최소 4자 , 하나 이상의 대.소문자 , 하나 이상의 숫자 사용
 
-  // const regNickname = /^[ㄱ-ㅎ|가-힣]{2,6}$/;
   //유효성 검사 및 유즈스테이트 작성
   const onChangeMemberHandler = (e) => {
     const { name, value } = e.target;
@@ -52,7 +45,7 @@ const SignUp = () => {
             `숫자와 대,소문자가 각각 한 개 이상 포함된
   4~20글자로 된 아이디`
           )
-        : setMemberIdInput("중복 확인 가능합니다.");
+        : setMemberIdInput("");
 
     if (name === "password")
       !regPassword.test(value)
@@ -69,7 +62,7 @@ const SignUp = () => {
         ? setPassCheckInput("비밀번호가 불일치합니다")
         : setPassCheckInput("");
   };
-  // 회원가입 POST요청 및 공백 존재 시 경고창 생성
+
   const onSubmitUserHandler = (e) => {
     e.preventDefault();
     if (
@@ -96,11 +89,18 @@ const SignUp = () => {
 
     dispatch(__checkMemberId(memberId));
   };
+  //닉네임 중복 학인
   const onNickCheckhandler = (e) => {
     e.preventDefault();
 
     dispatch(__checkMemberNick(nickname));
   };
+
+  //중복 확인 여부
+  const idNotChecked = useSelector((state) => state.memberList.idNotChecked);
+  const nickNotChecked = useSelector(
+    (state) => state.memberList.nickNotChecked
+  );
 
   return (
     <SignUpLayout>
@@ -116,7 +116,12 @@ const SignUp = () => {
                 placeholder="ID를 입력해주세요"
                 onChange={onChangeMemberHandler}
               />
-              <MainButton onClick={onIdCheckhandler}>중복확인</MainButton>
+              <MainButton
+                onClick={onIdCheckhandler}
+                disabled={!regMemberId.test(memberId) ? true : false}
+              >
+                중복확인
+              </MainButton>
             </InputBox>
 
             <HelperText id="help-memberId" className="help">
@@ -132,11 +137,10 @@ const SignUp = () => {
                 onChange={onChangeMemberHandler}
               />
               <MainButton onClick={onNickCheckhandler}>중복확인</MainButton>
+              {/* <MainButton onClick={onNickCheckhandler} disabled={nickAble}>
+                중복확인
+              </MainButton> */}
             </InputBox>
-
-            {/* <p id="help-nickname" className="help">
-          {nicknameInput}
-        </p> */}
           </StInputcontainer>
 
           <PasswordBox>
@@ -163,7 +167,17 @@ const SignUp = () => {
           </PasswordBox>
 
           <Stbutton>
-            <MainButton onClick={onSubmitUserHandler}> 가입하기</MainButton>
+            <MainButton
+              onClick={onSubmitUserHandler}
+              disabled={
+                !regPassword.test(password) ||
+                idNotChecked ||
+                nickNotChecked ||
+                !(password == passwordCheck)
+              }
+            >
+              가입하기
+            </MainButton>
           </Stbutton>
         </SingUpForm>
       </SingUpBox>
