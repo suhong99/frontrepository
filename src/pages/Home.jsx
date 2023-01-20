@@ -66,8 +66,12 @@ const Home = () => {
               // setModal={setModalIsOpen()}
             />
           </Modal>
-
-          <MainButton onClick={() => navigate("/SignUp")}>회원가입</MainButton>
+          {!loginCheck ? (
+            <MainButton onClick={() => navigate("/SignUp")}>
+              회원가입
+            </MainButton>
+          ) : null}
+          {/* <MainButton onClick={() => navigate("/SignUp")}>회원가입</MainButton> */}
           <MainButton onClick={() => navigate("/List")}>문제풀기</MainButton>
           <MainButton onClick={() => navigate("/Post")}>문제만들기</MainButton>
         </ButtonContainer>
