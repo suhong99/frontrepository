@@ -146,9 +146,9 @@ export const commentsSlice = createSlice({
       state.commentsByTodoId.isLoading = false;
       // console.log(state.commentsByTodoId);
       // console.log("삭제에서");
-
+      console.log(state.commentsByTodoId.data);
       const target = state.commentsByTodoId.data.allComments.findIndex(
-        (comment) => comment.id === action.payload
+        (comment) => comment.cId === action.payload
       );
       state.commentsByTodoId.data.allComments.splice(target, 1);
     },
@@ -163,7 +163,7 @@ export const commentsSlice = createSlice({
     },
     [__updateComment.fulfilled]: (state, action) => {
       const target = state.commentsByTodoId.data.allComments.findIndex(
-        (comment) => comment.id === action.payload.cId
+        (comment) => comment.cId === action.payload.cId
       );
       state.isLoading = false;
       console.log(action.payload);
