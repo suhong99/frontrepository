@@ -50,8 +50,14 @@ export const __deleteComment = createAsyncThunk(
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      http.patch(`/comments/${payload.id}`, payload);
+      const data = await http.put(`/comment/${payload.cId}`, {
+        comment: payload.comment,
+      });
+      if (data.status === 201) {
+        alert("댓글이 수정되었습니다.");
+      }
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -150,7 +156,7 @@ export const commentsSlice = createSlice({
     },
     [__updateComment.fulfilled]: (state, action) => {
       const target = state.commentsByTodoId.data.findIndex(
-        (comment) => comment.id === action.payload.id
+        (comment) => comment.id === action.payload.cId
       );
       state.isLoading = false;
       state.commentsByTodoId.data.splice(target, 1, action.payload);

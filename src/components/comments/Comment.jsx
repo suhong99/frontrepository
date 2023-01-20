@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { VscTrash } from "react-icons/vsc";
 import { VscEdit } from "react-icons/vsc";
 import {
   __deleteComment,
   __updateComment,
+  __getCommnetsByTodoId,
 } from "../../redux/modules/commentsSlice";
-import {
-  clearComment,
-  globalEditModeToggle,
-  __getComment,
-} from "../../redux/modules/commentSlice";
+import { useParams } from "react-router";
+import { useRef } from "react";
 
 const Comment = ({ comment }) => {
-  const { id } = useParams();
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [updatedComment, setUpdatedComment] = useState("");
-  // console.log(comment);
-  const { content } = useSelector((state) => state.comment.data);
-  const { isGlobalEditmode } = useSelector((state) => state.comment);
+  const { id } = useParams();
+  const editCommentInput = useRef();
+  editCommentInput.current = comment.comment;
+  console.log(editCommentInput.current);
 
   const onDeleteButtonHandler = () => {
     const result = window.confirm("삭제하시겠습니까?");
@@ -31,10 +27,26 @@ const Comment = ({ comment }) => {
       return;
     }
   };
+  const onUpdateButtonHandler = () => {
+    const result = window.confirm("수정하시겠습니까?");
+    if (result) {
+      console.log(editCommentInput);
+      dispatch(
+        __updateComment({
+          cId: comment.cId,
+          comment: editCommentInput.current.value,
+        })
+      );
+      setIsEdit(!isEdit);
+      // dispatch(__getCommnetsByTodoId(id));
+    } else {
+      return;
+    }
+  };
 
-  useEffect(() => {
-    setUpdatedComment(content);
-  }, [content]);
+  const onEditableHandler = () => {
+    setIsEdit(!isEdit);
+  };
 
   return (
     <StComment>
@@ -43,25 +55,20 @@ const Comment = ({ comment }) => {
           <StInputWrapper>
             <input
               type="text"
-              value={updatedComment}
-              maxlength={100}
-              onChange={(event) => {
-                setUpdatedComment(event.target.value);
-              }}
+              maxLength={100}
+              name="editCommentInput"
+              ref={editCommentInput}
+              defaultValue={editCommentInput.current}
             />
           </StInputWrapper>
           <StControlGroup>
-            <button
-              size="small"
-              bgColor="#FE531F"
-              // onClick={onCancelButtonHandler}
-            >
+            <button size="small" bgcolor="#FE531F" onClick={onEditableHandler}>
               <div>취소</div>
             </button>
             <button
               size="small"
-              bgColor="#FE531F"
-              // onClick={onUpdateButtonHandler}
+              bgcolor="#FE531F"
+              onClick={onUpdateButtonHandler}
             >
               <div>저장</div>
             </button>
@@ -79,7 +86,7 @@ const Comment = ({ comment }) => {
               size="small"
               bgcolor="#FE531F"
               // disabled={isGlobalEditmode}
-              // onClick={onChangeEditButtonHandler}
+              onClick={onEditableHandler}
             >
               <VscEdit size="16" color="#fff" />
             </button>

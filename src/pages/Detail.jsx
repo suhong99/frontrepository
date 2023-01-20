@@ -55,6 +55,8 @@ const Detail = ({ list }) => {
   const editContentInput = useRef();
   editContentInput.current = detail?.content;
   const editAnswerInput = useRef();
+  console.log(editContentInput.current);
+  console.log(detail.content);
 
   const onEditHandler = async (list) => {
     if (
