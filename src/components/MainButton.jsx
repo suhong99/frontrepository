@@ -14,6 +14,9 @@ const MainButtonStyle = styled.button`
   height: 35px;
   width: 150px;
   border-radius: 10px;
+  :disabled {
+    opacity: 0.4;
+  }
   cursor: pointer;
   &:hover {
     background-color: gray;

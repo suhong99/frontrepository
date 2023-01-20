@@ -30,10 +30,6 @@ const Detail = ({ list }) => {
     return () => dispatch(clearPost());
   }, [dispatch, param.id]);
 
-  // useEffect(() => {
-  //   setUpdatedDetail(detail?.content);
-  // }, [detail]);
-
   // 정답 제거하기
   const onDeleteHandler = () => {
     dispatch(__deletePostDetail(param.id));
@@ -51,7 +47,7 @@ const Detail = ({ list }) => {
   editContentInput.current = detail?.content;
   const editAnswerInput = useRef();
   // console.log(editContentInput.current);
-  // console.log(detail.content);
+  // console.log(detail);
 
   const onEditHandler = async (list) => {
     if (
@@ -146,7 +142,7 @@ const Detail = ({ list }) => {
                   </StWrap>
                 </StMain>
                 <StIconWrap>
-                  <Like isLiked={detail?.isLiked} detailId={param.id} />
+                  <Like isLiked={detail.isLiked} detailId={param.id} />
                   <CommentAdder
                     showComment={showComment}
                     setShowComment={setShowComment}

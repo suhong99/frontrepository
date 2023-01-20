@@ -6,17 +6,10 @@ import { __editLikeness } from "../redux/modules/detailSlice";
 import { useEffect } from "react";
 const Like = (props) => {
   const dispatch = useDispatch();
-  //   console.log(props.isLiked); //true or false
-  const [like, setLike] = useState(false);
-  //   if (props.isLiked !== undefined) {
-  //     setLike(props.isLiked);
-  //   }
-  // 새로 고침시 제대로 안됨.
-  useEffect(() => {
-    setLike(props.isLiked);
-  }, [setLike]);
-
-  //   console.log(like);
+  const [like, setLike] = useState(null);
+  // const a = props.isLiked;
+  useEffect(() => {}, []);
+  // // 새로 고침시 제대로 안됨.
   const likeClick = () => {
     setLike(!like);
     dispatch(__editLikeness({ id: props.detailId, likeStatus: true }));
