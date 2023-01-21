@@ -14,6 +14,7 @@ const AddCommentForm = () => {
       return alert("모든 항목을 입력해주세요.");
     }
     dispatch(__addComment({ id: id, comment: commentInput.current.value }));
+    commentInput.current.value = "";
   };
 
   return (
@@ -24,6 +25,7 @@ const AddCommentForm = () => {
         type="text"
         ref={commentInput}
         maxLength={100}
+        defaultValue={commentInput}
       />
       <AddCommentButton onClick={onAddCommentButtonHandler}>
         추가하기

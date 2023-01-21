@@ -6,9 +6,10 @@ import { __editLikeness } from "../redux/modules/detailSlice";
 import { useEffect } from "react";
 const Like = (props) => {
   const dispatch = useDispatch();
-  const [like, setLike] = useState(null);
+  const [like, setLike] = useState(props.isLiked);
+  console.log(like);
   // const a = props.isLiked;
-  useEffect(() => {}, []);
+  useEffect(() => {}, [like]);
   // // 새로 고침시 제대로 안됨.
   const likeClick = () => {
     setLike(!like);
