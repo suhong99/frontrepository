@@ -28,7 +28,7 @@ export const __getPostDetail = createAsyncThunk(
     try {
       // console.log(payload);
       const { data } = await http.get(`/quiz/${payload}`);
-      // console.log("데이터", data);
+      console.log("데이터", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

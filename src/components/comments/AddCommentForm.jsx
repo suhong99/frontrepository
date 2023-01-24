@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,9 @@ const AddCommentForm = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const commentInput = useRef();
+  // useEffect(() => {
+  //   commentInput.current = "";
+  // }, []);
   const onAddCommentButtonHandler = (event) => {
     event.preventDefault();
     if (commentInput.current.value.trim() === "") {
@@ -16,6 +19,7 @@ const AddCommentForm = () => {
     dispatch(__addComment({ id: id, comment: commentInput.current.value }));
     commentInput.current.value = "";
   };
+  // console.log(commentInput);
 
   return (
     <StForm>
@@ -25,7 +29,6 @@ const AddCommentForm = () => {
         type="text"
         ref={commentInput}
         maxLength={100}
-        defaultValue={commentInput}
       />
       <AddCommentButton onClick={onAddCommentButtonHandler}>
         추가하기
@@ -35,10 +38,6 @@ const AddCommentForm = () => {
 };
 
 export default AddCommentForm;
-
-const StNameInput = styled.div`
-  width: 150px;
-`;
 
 const StForm = styled.form`
   /* gap: 12px; */

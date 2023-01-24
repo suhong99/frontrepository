@@ -24,7 +24,6 @@ const Detail = ({ list }) => {
   // const [updatedDtail, setUpdatedDetail] = useState("");
 
   const detail = useSelector((state) => state.detail.list);
-
   useEffect(() => {
     dispatch(__getPostDetail(param.id));
     return () => dispatch(clearPost());
@@ -80,6 +79,7 @@ const Detail = ({ list }) => {
   //props로 내릴 값. showComment를 통해서 댓글을 보여줄 지 말지 결정
   const [showComment, setShowComment] = useState(false);
   // console.log(showComment);
+  // console.log(detail);
 
   return (
     <>
